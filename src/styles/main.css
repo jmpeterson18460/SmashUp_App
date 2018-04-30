@@ -22,6 +22,19 @@ form {
     border-radius: 2px;
 }
 
+.formnumofplayers{
+    background-color: #dbd5d5;
+    width: 10%;
+    height: 100px;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 2px;
+}
+
+.h2numofplayers {
+    text-align: center
+}
+
 input {
     margin: 5px;
     margin-bottom: 10px;

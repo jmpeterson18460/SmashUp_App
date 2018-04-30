@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Nav from '../../components/Nav/Nav';
 
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
+import Button from 'material-ui/Button';
 
 
 const mapStateToProps = state => ({
@@ -38,11 +40,8 @@ class UserPage extends Component {
           >
             Welcome, { this.props.user.userName }!
           </h1>
-          <button
-            onClick={this.logout}
-          >
-            Log Out
-          </button>
+          <Button variant="raised" color="primary" >
+          <Link to="/postagame/numberofplayers">Post a Game!</Link></Button>
         </div>
       );
     }
