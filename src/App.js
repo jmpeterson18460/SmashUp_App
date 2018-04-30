@@ -10,13 +10,14 @@ import Header from './components/Header/Header';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import UserPage from './components/UserPage/UserPage';
-import InfoPage from './components/InfoPage/InfoPage';
+import MyStatsPage from './components/MyStatsPage/MyStatsPage';
+import MyGameLog from './components/MyGameLogPage/MyGameLogPage';
 
 import './styles/main.css';
 
 const App = () => (
   <div>
-    <Header title="Project Base" />
+    <Header title="Smash Up Stats" />
     <Router>
       <Switch>
         <Redirect exact from="/" to="/home" />
@@ -33,8 +34,12 @@ const App = () => (
           component={UserPage}
         />
         <Route
-          path="/info"
-          component={InfoPage}
+          path="/mystats"
+          component={MyStatsPage}
+        />
+        <Route
+          path="/mygamelog"
+          component={MyGameLog}
         />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
