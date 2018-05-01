@@ -11,7 +11,6 @@ class NavBar extends Component {
 
   logout = () => {
     this.props.dispatch(triggerLogout());
-    // this.props.history.push('home');
   }
 
 

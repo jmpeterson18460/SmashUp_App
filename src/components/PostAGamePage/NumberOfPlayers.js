@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from 'material-ui/Button';
-
+import { Link } from 'react-router-dom';
 
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
@@ -62,7 +62,8 @@ const mapStateToProps = state => ({
                     </label>
                 </div>
             </form>
-            <Button variant="raised" color="primary">NEXT</Button>
+            <Button variant="raised" color="primary">
+            <Link to="/postagame/gameinfo">NEXT</Link></Button>
             </div>
           );
         }
