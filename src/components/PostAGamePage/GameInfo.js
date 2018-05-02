@@ -96,9 +96,19 @@ const mapStateToProps = state => ({
     };
 
     handleChange = name => value => {
+      if(value.search(',') > 0){
+        value = value.split(',')
+      }
+
+      console.log('Value: ', value);
+      
       this.setState({
         [name]: value,
       });
+
+      console.log('State: ', this.state);
+      
+
     };
 
     componentDidMount() {
@@ -117,9 +127,6 @@ const mapStateToProps = state => ({
         
         const { classes } = this.props;
         let content = null;
-
-        console.log('Suggestions: ', suggestions);
-        
 
         const factions = this.props.state.faction.factionName.map(faction => ({
           value: faction.name,
