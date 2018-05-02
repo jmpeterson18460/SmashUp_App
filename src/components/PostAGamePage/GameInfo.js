@@ -14,53 +14,15 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Chip from 'material-ui/Chip';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import compose from 'recompose/compose';
 
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 
 const mapStateToProps = state => ({
     user: state.user,
+    state
   });
-
-  const suggestions = [
-    { label: 'Afghanistan' },
-    { label: 'Aland Islands' },
-    { label: 'Albania' },
-    { label: 'Algeria' },
-    { label: 'American Samoa' },
-    { label: 'Andorra' },
-    { label: 'Angola' },
-    { label: 'Anguilla' },
-    { label: 'Antarctica' },
-    { label: 'Antigua and Barbuda' },
-    { label: 'Argentina' },
-    { label: 'Armenia' },
-    { label: 'Aruba' },
-    { label: 'Australia' },
-    { label: 'Austria' },
-    { label: 'Azerbaijan' },
-    { label: 'Bahamas' },
-    { label: 'Bahrain' },
-    { label: 'Bangladesh' },
-    { label: 'Barbados' },
-    { label: 'Belarus' },
-    { label: 'Belgium' },
-    { label: 'Belize' },
-    { label: 'Benin' },
-    { label: 'Bermuda' },
-    { label: 'Bhutan' },
-    { label: 'Bolivia, Plurinational State of' },
-    { label: 'Bonaire, Sint Eustatius and Saba' },
-    { label: 'Bosnia and Herzegovina' },
-    { label: 'Botswana' },
-    { label: 'Bouvet Island' },
-    { label: 'Brazil' },
-    { label: 'British Indian Ocean Territory' },
-    { label: 'Brunei Darussalam' },
-  ].map(suggestion => ({
-    value: suggestion.label,
-    label: suggestion.label,
-  }));
 
   class Option extends React.Component {
     handleClick = event => {
@@ -141,7 +103,9 @@ const mapStateToProps = state => ({
 
     componentDidMount() {
         this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
+        this.props.dispatch({type: 'FETCH_FACTION'})
       }
+      
     
       componentDidUpdate() {
         if (!this.props.user.isLoading && this.props.user.userName === null) {
@@ -150,8 +114,19 @@ const mapStateToProps = state => ({
       }
 
       render(){
+        
         const { classes } = this.props;
         let content = null;
+
+        console.log('Suggestions: ', suggestions);
+        
+
+        const factions = this.props.state.faction.factionName.map(faction => ({
+          value: faction.name,
+          label: faction.name
+        }));
+        console.log('Factions: ', factions);
+        
 
         if (this.props.user.userName) {
           content = (
@@ -164,7 +139,7 @@ const mapStateToProps = state => ({
                     inputComponent={SelectWrapped}
                     value={this.state.multi}
                     onChange={this.handleChange('multi')}
-                    placeholder="Select multiple countries"
+                    placeholder="Select 2 factions"
                     name="react-select-chip"
                     inputProps={{
                       classes,
@@ -172,7 +147,7 @@ const mapStateToProps = state => ({
                       instanceId: 'react-select-chip',
                       id: 'react-select-chip',
                       simpleValue: true,
-                      options: suggestions,
+                      options: factions,
                     }}
                   />
                 </div>
