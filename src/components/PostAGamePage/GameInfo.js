@@ -123,6 +123,7 @@ const mapStateToProps = state => ({
 
     handlePoints = (event) => {
       this.setState({
+        ...this.state,
         newInput: {
           ...this.state.newInput,
           points: parseInt(event.target.value, 10)
@@ -132,15 +133,17 @@ const mapStateToProps = state => ({
 
     handleRank = (event) => {
       this.setState({
+        ...this.state,
         newInput: {
           ...this.state.newInput,
-          selectedOption: parseInt(event.target.value, 10)
+          rank: parseInt(event.target.value, 10)
         }
       })
     }
 
     handleBases = (event) => {
       this.setState({
+        ...this.state,
         newInput: {
           ...this.state.newInput,
           bases: event.target.value
@@ -150,6 +153,7 @@ const mapStateToProps = state => ({
 
     handleComments = (event) => {
       this.setState({
+        ...this.state,
         newInput: {
           ...this.state.newInput,
           comments: event.target.value
@@ -210,40 +214,40 @@ const mapStateToProps = state => ({
                 </div>
                 <p>Number of points:<input onChange={this.handlePoints}/></p>
                 <div>
-                {/* <p className="h2numofplayers">Placement</p>
+                <p className="h2numofplayers">Placement</p>
                   <form className="formnumofplayers">
                     <div className="radio">
                         <label>
-                            <input type="radio" value="1" checked={this.state.newInput.rank === '1'}
+                            <input type="radio" value="1" checked={this.state.newInput.rank === 1}
                             onClick={this.handleRank}/>
                             1st
                         </label>
                         </div>
                         <div className="radio">
                         <label>
-                            <input type="radio" value="2" checked={this.state.newInput.rank === '2'} 
+                            <input type="radio" value="2" checked={this.state.newInput.rank === 2} 
                             onClick={this.handleRank}/>
                             2nd
                         </label>
                         </div>
                         <div className="radio">
                         <label>
-                            <input type="radio" value="3" checked={this.state.newInput.rank === '3'}
+                            <input type="radio" value="3" checked={this.state.newInput.rank === 3}
                             onClick={this.handleRank}/>
                             3rd
                         </label>
                         </div>
                         <div className="radio">
                         <label>
-                            <input type="radio" value="4" checked={this.state.newInput.rank === '4'}
+                            <input type="radio" value="4" checked={this.state.newInput.rank === 4}
                             onClick={this.handleRank}/>
                             4th
                         </label>
                         </div>
-                  </form> */}
+                  </form>
                 </div>
-                <p>Bases:<textarea className="textarea"/></p>
-                <p>Comments:<textarea className="textarea"/></p>
+                <p>Bases:<textarea className="textarea" onChange={this.handleBases}/></p>
+                <p>Comments:<textarea className="textarea" onChange={this.handleComments}/></p>
                 <Button variant="raised" color="primary" onClick={this.clearAndSendState}/>
             </div>
                 

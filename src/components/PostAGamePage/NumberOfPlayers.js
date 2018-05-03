@@ -53,21 +53,21 @@ const mapStateToProps = state => ({
               <form className="formnumofplayers">
                 <div className="radio">
                     <label>
-                        <input type="radio" value="1" checked={this.state.selectedOption === '1'}
+                        <input type="radio" value="2" checked={this.state.selectedOption === '2'}
                         onClick={this.handleClick}/>
                         2
                     </label>
                     </div>
                     <div className="radio">
                     <label>
-                        <input type="radio" value="2" checked={this.state.selectedOption === '2'} 
+                        <input type="radio" value="3" checked={this.state.selectedOption === '3'} 
                         onClick={this.handleClick}/>
                         3
                     </label>
                     </div>
                     <div className="radio">
                     <label>
-                        <input type="radio" value="3" checked={this.state.selectedOption === '3'}
+                        <input type="radio" value="4" checked={this.state.selectedOption === '4'}
                         onClick={this.handleClick}/>
                         4
                     </label>
