@@ -17,6 +17,10 @@ function* fetchFaction(action) {
 function* postNumOfPlayers(action) {
     try{
         yield call(axios.post, '/api/smashup/numofplayers', action.payload)
+        yield put({
+            type:'SET_NUM_OF_PLAYERS',
+            payload: action.payload
+        })
     }catch (error) {
         console.log('Error in posting number of players: ', error);
         
@@ -25,7 +29,7 @@ function* postNumOfPlayers(action) {
 
 function* factionSaga() {
     yield takeLatest('FETCH_FACTION', fetchFaction);
-    yield takeLatest('SET_NUM_OF_PLAYERS', postNumOfPlayers)
+    yield takeLatest('POST_NUM_OF_PLAYERS', postNumOfPlayers)
   }
 
   export default factionSaga;

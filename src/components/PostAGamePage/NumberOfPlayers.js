@@ -33,12 +33,14 @@ const mapStateToProps = state => ({
       }
 
       sendOption = () => {
-        let selectedNumber = parseInt(this.state.selectedOption)
+        let selectedNumber = parseInt(this.state.selectedOption, 10)
+        console.log('Selected Number: ', selectedNumber);
         
-        this.props.dispatch({
-          type: 'SET_NUM_OF_PLAYERS',
-          payload: selectedNumber
-        })
+        
+        // this.props.dispatch({
+        //   type: 'POST_NUM_OF_PLAYERS',
+        //   payload: selectedNumber
+        // })
       }
 
       render(){
