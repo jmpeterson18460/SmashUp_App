@@ -32,6 +32,15 @@ const mapStateToProps = state => ({
         })
       }
 
+      sendOption = () => {
+        let selectedNumber = parseInt(this.state.selectedOption)
+        
+        this.props.dispatch({
+          type: 'SET_NUM_OF_PLAYERS',
+          payload: selectedNumber
+        })
+      }
+
       render(){
         let content = null;
 
@@ -42,27 +51,27 @@ const mapStateToProps = state => ({
               <form className="formnumofplayers">
                 <div className="radio">
                     <label>
-                        <input type="radio" value="option1" checked={this.state.selectedOption === 'option1'}
+                        <input type="radio" value="1" checked={this.state.selectedOption === '1'}
                         onClick={this.handleClick}/>
                         2
                     </label>
                     </div>
                     <div className="radio">
                     <label>
-                        <input type="radio" value="option2" checked={this.state.selectedOption === 'option2'} 
+                        <input type="radio" value="2" checked={this.state.selectedOption === '2'} 
                         onClick={this.handleClick}/>
                         3
                     </label>
                     </div>
                     <div className="radio">
                     <label>
-                        <input type="radio" value="option3" checked={this.state.selectedOption === 'option3'}
+                        <input type="radio" value="3" checked={this.state.selectedOption === '3'}
                         onClick={this.handleClick}/>
                         4
                     </label>
                 </div>
             </form>
-            <Button variant="raised" color="primary">
+            <Button variant="raised" color="primary" onClick={this.sendOption}>
             <Link to="/postagame/gameinfo">NEXT</Link></Button>
             </div>
           );

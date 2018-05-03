@@ -6,20 +6,26 @@ const router = express.Router();
  * GET route template
  */
 router.get('/faction', (req, res) => {
-    const queryText = `SELECT * FROM "faction" ORDER BY "name" ASC;`
-    pool.query(queryText).then((result) => {
-        res.send(result.rows)
-    }).catch((error) => {
-        console.log('Error in getting factions: ', error);
-        
-    })
+    if(req.isAuthenticated()){
+        const queryText = `SELECT * FROM "faction" ORDER BY "name" ASC;`
+        pool.query(queryText).then((result) => {
+            res.send(result.rows)
+        }).catch((error) => {
+            console.log('Error in getting factions: ', error);
+            
+        })
+    }else{
+        res.sendStatus(403);
+    }
 });
 
 /**
  * POST route template
  */
-router.post('/', (req, res) => {
-
+router.post('/numofplayers', (req, res) => {
+    if(req.isAuthenticated()){
+        const queryText =  `INSERT INTO "user_game" ("points") VALUES ($1);`
+    }
 });
 
 module.exports = router;

@@ -93,6 +93,7 @@ const mapStateToProps = state => ({
       single: null,
       multi: null,
       multiLabel: null,
+      selectedOption: ''
     };
 
     handleChange = name => value => {
@@ -105,11 +106,13 @@ const mapStateToProps = state => ({
       this.setState({
         [name]: value,
       });
-
-      console.log('State: ', this.state);
-      
-
     };
+
+    handleClick = (event) => {
+      this.setState({
+          selectedOption: event.target.value
+      })
+    }
 
     componentDidMount() {
         this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
@@ -158,7 +161,42 @@ const mapStateToProps = state => ({
                     }}
                   />
                 </div>
-
+                <p>Number of points:<input/></p>
+                <div>
+                <p className="h2numofplayers">Placement</p>
+                  <form className="formnumofplayers">
+                    <div className="radio">
+                        <label>
+                            <input type="radio" value="option1" checked={this.state.selectedOption === 'option1'}
+                            onClick={this.handleClick}/>
+                            1st
+                        </label>
+                        </div>
+                        <div className="radio">
+                        <label>
+                            <input type="radio" value="option2" checked={this.state.selectedOption === 'option2'} 
+                            onClick={this.handleClick}/>
+                            2nd
+                        </label>
+                        </div>
+                        <div className="radio">
+                        <label>
+                            <input type="radio" value="option3" checked={this.state.selectedOption === 'option3'}
+                            onClick={this.handleClick}/>
+                            3rd
+                        </label>
+                        </div>
+                        <div className="radio">
+                        <label>
+                            <input type="radio" value="option3" checked={this.state.selectedOption === 'option3'}
+                            onClick={this.handleClick}/>
+                            4th
+                        </label>
+                        </div>
+                  </form>
+                </div>
+                <p>Bases:<textarea className="textarea"/></p>
+                <p>Comments:<textarea className="textarea"/></p>
             </div>
                 
           );
