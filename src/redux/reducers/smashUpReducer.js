@@ -16,5 +16,5 @@ const numOfPlayers = (state = 0, action) => {
 
 export default combineReducers({
     factionName,
-    numOfPlayers
+    numOfPlayers,
 })

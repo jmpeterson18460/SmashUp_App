@@ -31,30 +31,22 @@ const mapStateToProps = state => ({
         this.setState({
             selectedOption: event.target.value
         })
-        // this.props.dispatch({
-        //   type: 'SET_NUM_OF_PLAYERS',
-        //   payload: this.state.selectedOption
-        // })
       }
 
       sendOption = () => {
-        console.log('state: ', this.state.selectedOption);
-        
         let selectedNumber = parseInt(this.state.selectedOption, 10)
         console.log('Selected Number: ', selectedNumber);
-        
         this.props.dispatch({
           type: 'SET_NUM_OF_PLAYERS',
           payload: selectedNumber
         })
+        
       }
 
       render(){
+        // set state of numOfPlayers reducer to the number of players selected by user
         this.sendOption();
         let content = null;
-        console.log('state in render: ', this.state.selectedOption);
-        
-        console.log('Number of Players: ', this.props.state.faction.numOfPlayers);
         
 
         if (this.props.user.userName) {

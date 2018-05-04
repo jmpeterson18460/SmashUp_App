@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Typography from 'material-ui/Typography';
 import Input from 'material-ui/Input';
 
-import { MenuItem } from 'material-ui/Menu';
+
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CancelIcon from '@material-ui/icons/Cancel';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
@@ -17,35 +17,14 @@ import 'react-select/dist/react-select.css';
 
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
+import Option from '../OptionsForAutoComplete/OptionsForAutoComplete'
 
 const mapStateToProps = state => ({
     user: state.user,
     state
   });
 
-  class Option extends React.Component {
-    handleClick = event => {
-      this.props.onSelect(this.props.option, event);
-    };
-  
-    render() {
-      const { children, isFocused, isSelected, onFocus } = this.props;
-  
-      return (
-        <MenuItem
-          onFocus={onFocus}
-          selected={isFocused}
-          onClick={this.handleClick}
-          component="div"
-          style={{
-            fontWeight: isSelected ? 500 : 400,
-          }}
-        >
-          {children}
-        </MenuItem>
-      );
-    }
-  }
+<Option/>
   
   function SelectWrapped(props) {
     const { classes, ...other } = props;
@@ -90,6 +69,7 @@ const mapStateToProps = state => ({
 
     state = {
       multi: null,
+      numOfPlayers: this.props.state.faction.numOfPlayers,
       newInput: {
         playerName: this.props.user.userName,
         factionArray: [],
@@ -102,8 +82,18 @@ const mapStateToProps = state => ({
 
     handleFactions = name => value => {
       
+      //value is a string; this string consists of the ids of the factions selected by the user
+      //from the autocomplete box. The ids are separated by a comma e.g. '2,3'
+
+      //convert value into an array where the elements the faction ids; these elements are
+      //of type string
       if(value.search(',') > 0){
-        value = value.split(',');   
+        value = value.split(',');
+
+        //convert the elements from strings to integers in value
+        for(let i=0; i<value.length; i++){
+          value[i] = +value[i];
+        }   
         console.log('value: ', value);
         
         this.setState({
@@ -164,6 +154,11 @@ const mapStateToProps = state => ({
     clearAndSendState = () => {
       console.log('Clearing fields and sending state!');
 
+      this.props.dispatch({
+        type: 'POST_GAME_INFO',
+        payload: this.state.newInput
+      })
+
     }
 
     componentDidMount() {
@@ -184,7 +179,7 @@ const mapStateToProps = state => ({
         let content = null;
 
         const factions = this.props.state.faction.factionName.map(faction => ({
-          value: faction.name,
+          value: faction.id,
           label: faction.name
         }));
         
@@ -248,7 +243,7 @@ const mapStateToProps = state => ({
                 </div>
                 <p>Bases:<textarea className="textarea" onChange={this.handleBases}/></p>
                 <p>Comments:<textarea className="textarea" onChange={this.handleComments}/></p>
-                <Button variant="raised" color="primary" onClick={this.clearAndSendState}/>
+                <Button variant="raised" color="primary" onClick={this.clearAndSendState}>NEXT</Button>
             </div>
                 
           );
