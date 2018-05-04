@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 
+//this page will allow the user to select the number of people that played
+
+//allows us to get information from redux state
 const mapStateToProps = state => ({
     user: state.user,
     state
@@ -28,14 +31,21 @@ const mapStateToProps = state => ({
       }
 
       handleClick = (event) => {
+
+        //changes selectedOption in state to the value of the radio button 
+        //clicked on by the user
         this.setState({
             selectedOption: event.target.value
         })
       }
 
       sendOption = () => {
+
+        //changes the value of the radio button from a string to an integer
         let selectedNumber = parseInt(this.state.selectedOption, 10)
         console.log('Selected Number: ', selectedNumber);
+
+        //sets state of numOfPlayers reducer to value of the selected radio button
         this.props.dispatch({
           type: 'SET_NUM_OF_PLAYERS',
           payload: selectedNumber
@@ -44,7 +54,7 @@ const mapStateToProps = state => ({
       }
 
       render(){
-        // set state of numOfPlayers reducer to the number of players selected by user
+        
         this.sendOption();
         let content = null;
         
@@ -53,6 +63,9 @@ const mapStateToProps = state => ({
           content = (
             <div>
                 <h2 className="h2numofplayers">Please select number of players</h2>
+                
+                {/* form of radio buttons where the user will select the number of players
+                that played the game */}
               <form className="formnumofplayers">
                 <div className="radio">
                     <label>
@@ -63,6 +76,8 @@ const mapStateToProps = state => ({
                     </div>
                     <div className="radio">
                     <label>
+                      
+                      {/* if checked is true, the radio button will be filled in */}
                         <input type="radio" value="3" checked={this.state.selectedOption === '3'} 
                         onClick={this.handleClick}/>
                         3
@@ -76,6 +91,8 @@ const mapStateToProps = state => ({
                     </label>
                 </div>
             </form>
+            {/* When the button is clicked, it triggers the function sendOption and 
+            takes the user to the gameinfo page */}
             <Button variant="raised" color="primary" onClick={this.sendOption}>
             <Link to="/postagame/gameinfo">NEXT</Link></Button>
             </div>
@@ -90,5 +107,5 @@ const mapStateToProps = state => ({
         );
       }
   }
-
+//allows the class NumberOfPlayers to send dispatches to redux
   export default connect(mapStateToProps)(NumberOfPlayers);

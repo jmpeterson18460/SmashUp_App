@@ -8,7 +8,7 @@ import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
 import Button from 'material-ui/Button';
 
-
+//allows us to get information from redux state
 const mapStateToProps = state => ({
   user: state.user,
 });
@@ -35,11 +35,14 @@ class UserPage extends Component {
     if (this.props.user.userName) {
       content = (
         <div>
+          {/* Displays welcome message with user name */}
           <h1
             id="welcome"
           >
-            Welcome, { this.props.user.userName }!
+            Welcome, { this.props.user.userName }! 
           </h1>
+
+          {/* When clicked, the user will be brought to the numberofplayers page */}
           <Button variant="raised" color="primary" >
           <Link to="/postagame/numberofplayers">Post a Game!</Link></Button>
         </div>

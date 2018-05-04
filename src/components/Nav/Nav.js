@@ -10,11 +10,15 @@ const mapStateToProps = state => ({
 class NavBar extends Component {
 
   logout = () => {
+
+    //calls the function that logs out the user
     this.props.dispatch(triggerLogout());
   }
 
 
   render(){
+
+    //creates a navigation bar that allows the user to access multiple pages on the site
     return(
         <div className="navbar">
           <div>

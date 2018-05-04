@@ -19,13 +19,21 @@ import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import Option from '../OptionsForAutoComplete/OptionsForAutoComplete'
 
+//this page is where the user will enter in all of the information about the game
+//of Smash Up that he or she just played
+
+//allows us to get information from redux state
 const mapStateToProps = state => ({
     user: state.user,
     state
   });
 
+//Brings in the component Option
 <Option/>
   
+  //this function will display the faction names in the autocomplete box and convert
+  //the selected factions to chips. The user will also be able to delete a chip they
+  //have selected
   function SelectWrapped(props) {
     const { classes, ...other } = props;
   
@@ -34,6 +42,8 @@ const mapStateToProps = state => ({
         optionComponent={Option}
         noResultsText={<Typography>{'No results found'}</Typography>}
         arrowRenderer={arrowProps => {
+
+          //brings in dropup and dropdown arrow icon
           return arrowProps.isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
         }}
         clearRenderer={() => <ClearIcon />}
@@ -47,6 +57,9 @@ const mapStateToProps = state => ({
           };
   
           if (onRemove) {
+
+            //deletes the chip if the user clicks on the 'x' in the chip icon
+            //or if the user hits the delete button on their device
             return (
               <Chip
                 tabIndex={-1}
@@ -94,8 +107,9 @@ const mapStateToProps = state => ({
         for(let i=0; i<value.length; i++){
           value[i] = +value[i];
         }   
-        console.log('value: ', value);
         
+        //changes factionArray to an array of integers, where those integers are
+        //the faction id's from the database
         this.setState({
           ...this.state,
           [name]:value,
@@ -112,6 +126,9 @@ const mapStateToProps = state => ({
     };
 
     handlePoints = (event) => {
+
+      //sets the points in state to the points the user entered; points is 
+      //of type integer
       this.setState({
         ...this.state,
         newInput: {
@@ -121,6 +138,8 @@ const mapStateToProps = state => ({
       })
     }
 
+    //sets the rank in state to the rank the user entered; rank is 
+      //of type integer
     handleRank = (event) => {
       this.setState({
         ...this.state,
@@ -131,6 +150,7 @@ const mapStateToProps = state => ({
       })
     }
 
+    //sets the bases in state to the text entered by the user
     handleBases = (event) => {
       this.setState({
         ...this.state,
@@ -141,6 +161,7 @@ const mapStateToProps = state => ({
       })
     }
 
+    //sets the comments in state to the text entered by the user
     handleComments = (event) => {
       this.setState({
         ...this.state,
@@ -151,6 +172,10 @@ const mapStateToProps = state => ({
       })
     }
 
+    //sends a dispatch to the postGameInfo generator function in the factionSaga
+    //with action 'POST_GAME_INFO' and payload of the newInput object in state;
+    //postGameInfo will then send a post request with the newInput object;
+    //clearAndSendState also clears the property values in the newInput object in state
     clearAndSendState = () => {
       console.log('Clearing fields and sending state!');
 
@@ -178,18 +203,25 @@ const mapStateToProps = state => ({
         const { classes } = this.props;
         let content = null;
 
+        //factions is an array that contains all the entries from the faction table
+        //in the database. Each entry is an object with the faction id and faction name
         const factions = this.props.state.faction.factionName.map(faction => ({
           value: faction.id,
           label: faction.name
         }));
         
-
+        //content will only be assigned if the user is still logged in
         if (this.props.user.userName) {
           content = (
             <div>
                 <h2 className="h2numofplayers">Game Info</h2>
+
+                {/* the first time this page is accessed, this input field will be 
+                automatically filled with the user's user name */}
                 <p>Player name:<input value={this.state.newInput.playerName}/></p>
                 <div >
+
+                  {/* this is the autocomplete box */}
                   <Input
                     fullWidth
                     inputComponent={SelectWrapped}
@@ -207,12 +239,18 @@ const mapStateToProps = state => ({
                     }}
                   />
                 </div>
+
+                {/* input field for the number of points scored */}
                 <p>Number of points:<input onChange={this.handlePoints}/></p>
                 <div>
                 <p className="h2numofplayers">Placement</p>
+
+                {/* form of radio buttons where the user will select what place
+                that player ranked */}
                   <form className="formnumofplayers">
                     <div className="radio">
                         <label>
+                          {/* if checked is true, the radio button will be filled in */}
                             <input type="radio" value="1" checked={this.state.newInput.rank === 1}
                             onClick={this.handleRank}/>
                             1st
@@ -241,7 +279,11 @@ const mapStateToProps = state => ({
                         </div>
                   </form>
                 </div>
+
+                {/* Here the user enters which bases were used for the game */}
                 <p>Bases:<textarea className="textarea" onChange={this.handleBases}/></p>
+
+                {/* Here the user can enter any comments they want to add about the game */}
                 <p>Comments:<textarea className="textarea" onChange={this.handleComments}/></p>
                 <Button variant="raised" color="primary" onClick={this.clearAndSendState}>NEXT</Button>
             </div>
@@ -258,4 +300,5 @@ const mapStateToProps = state => ({
       }
   }
 
+  //allows the class GameInfo to send dispatches to redux
   export default connect(mapStateToProps)(GameInfo);

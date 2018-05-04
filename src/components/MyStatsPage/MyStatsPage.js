@@ -14,6 +14,8 @@ class MyStatsPage extends Component {
   }
 
   componentDidUpdate() {
+
+    //checks to see if the user is still logged in
     if (!this.props.user.isLoading && this.props.user.userName === null) {
       this.props.history.push('home');
     }
