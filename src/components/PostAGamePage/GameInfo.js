@@ -96,7 +96,7 @@ const mapStateToProps = state => ({
         points: '',
         rank: '',
         bases: '',
-        comments: ''
+        comments: '',
       }
     };
 

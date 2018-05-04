@@ -8,12 +8,13 @@ import { USER_ACTIONS } from '../../redux/actions/userActions';
 
 const mapStateToProps = state => ({
     user: state.user,
+    state
   });
 
   class NumberOfPlayers extends Component {
 
     state = {
-        selectedOption: ''
+        selectedOption: 0
     }
 
     componentDidMount() {
@@ -30,21 +31,31 @@ const mapStateToProps = state => ({
         this.setState({
             selectedOption: event.target.value
         })
-      }
-
-      sendOption = () => {
-        let selectedNumber = parseInt(this.state.selectedOption, 10)
-        console.log('Selected Number: ', selectedNumber);
-        
-        
         // this.props.dispatch({
-        //   type: 'POST_NUM_OF_PLAYERS',
-        //   payload: selectedNumber
+        //   type: 'SET_NUM_OF_PLAYERS',
+        //   payload: this.state.selectedOption
         // })
       }
 
+      sendOption = () => {
+        console.log('state: ', this.state.selectedOption);
+        
+        let selectedNumber = parseInt(this.state.selectedOption, 10)
+        console.log('Selected Number: ', selectedNumber);
+        
+        this.props.dispatch({
+          type: 'SET_NUM_OF_PLAYERS',
+          payload: selectedNumber
+        })
+      }
+
       render(){
+        this.sendOption();
         let content = null;
+        console.log('state in render: ', this.state.selectedOption);
+        
+        console.log('Number of Players: ', this.props.state.faction.numOfPlayers);
+        
 
         if (this.props.user.userName) {
           content = (
