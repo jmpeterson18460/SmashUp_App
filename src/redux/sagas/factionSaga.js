@@ -3,7 +3,13 @@ import axios from 'axios'
 
 function* fetchFaction(action) {
     try{
+
+        //factionResponse sends get request to server and receives back all of the
+        //faction names and ids and stores them in factionResponse.data
         const factionResponse = yield call(axios.get, '/api/smashup/faction')
+
+        //sends faction names and ids to factionName reducer via action 'SET_FACTION'
+        //and payload factionResponse.data
         yield put({
             type: 'SET_FACTION',
             payload: factionResponse.data

@@ -89,9 +89,21 @@ const mapStateToProps = state => ({
         points: '',
         rank: '',
         bases: '',
-        comments: '',
+        comments: ''
       }
     };
+
+    handleName = (event) => {
+      
+      //sets playerName in state to what the user entered
+      this.setState({
+        ...this.state,
+        newInput: {
+          ...this.state.newInput,
+          playerName: event.target.value
+        }
+      })
+    }
 
     handleFactions = name => value => {
       
@@ -174,7 +186,7 @@ const mapStateToProps = state => ({
 
     //sends a dispatch to the postGameInfo generator function in the factionSaga
     //with action 'POST_GAME_INFO' and payload of the newInput object in state;
-    //postGameInfo will then send a post request with the newInput object;
+    //postGameInfo will then send a post request to the server with the newInput object;
     //clearAndSendState also clears the property values in the newInput object in state
     clearAndSendState = () => {
       console.log('Clearing fields and sending state!');
@@ -182,6 +194,19 @@ const mapStateToProps = state => ({
       this.props.dispatch({
         type: 'POST_GAME_INFO',
         payload: this.state.newInput
+      })
+
+      this.setState({
+        multi: null,
+        numOfPlayers: this.props.state.faction.numOfPlayers,
+        newInput: {
+          playerName: '',
+          factionArray: [],
+          points: '',
+          rank: '',
+          bases: '',
+          comments: ''
+        }
       })
 
     }
@@ -217,8 +242,9 @@ const mapStateToProps = state => ({
                 <h2 className="h2numofplayers">Game Info</h2>
 
                 {/* the first time this page is accessed, this input field will be 
-                automatically filled with the user's user name */}
-                <p>Player name:<input value={this.state.newInput.playerName}/></p>
+                automatically filled with the user's user name; after the user clicks
+                the next button, this input field will be empty */}
+                <p>Player name:<input value={this.state.newInput.playerName} onChange={this.handleName}/></p>
                 <div >
 
                   {/* this is the autocomplete box */}
@@ -240,13 +266,14 @@ const mapStateToProps = state => ({
                   />
                 </div>
 
-                {/* input field for the number of points scored */}
-                <p>Number of points:<input onChange={this.handlePoints}/></p>
+                {/* input field for the number of points scored; changes state when the 
+                user types in the number of points */}
+                <p>Number of points:<input value={this.state.newInput.points} onChange={this.handlePoints}/></p>
                 <div>
                 <p className="h2numofplayers">Placement</p>
 
                 {/* form of radio buttons where the user will select what place
-                that player ranked */}
+                that player ranked; changes state when the user selects an option */}
                   <form className="formnumofplayers">
                     <div className="radio">
                         <label>
@@ -280,11 +307,15 @@ const mapStateToProps = state => ({
                   </form>
                 </div>
 
-                {/* Here the user enters which bases were used for the game */}
-                <p>Bases:<textarea className="textarea" onChange={this.handleBases}/></p>
+                {/* Here the user enters which bases were used for the game; changes
+                state when the user types in the bases that were used */}
+                <p>Bases:<textarea className="textarea" value={this.state.newInput.bases} 
+                onChange={this.handleBases}/></p>
 
-                {/* Here the user can enter any comments they want to add about the game */}
-                <p>Comments:<textarea className="textarea" onChange={this.handleComments}/></p>
+                {/* Here the user can enter any comments they want to add about the game;
+                changes state when the user types in any comments */}
+                <p>Comments:<textarea className="textarea" value={this.state.newInput.comments} 
+                onChange={this.handleComments}/></p>
                 <Button variant="raised" color="primary" onClick={this.clearAndSendState}>NEXT</Button>
             </div>
                 
