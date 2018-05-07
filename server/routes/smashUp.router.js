@@ -26,13 +26,29 @@ router.get('/faction', (req, res) => {
             console.log('Error in getting factions: ', error);
             
         })
-    }else{
+    } else{
+
+        //if req.isAuthenticated() is false, the forbidden error will appear
+        //on the webpage
         res.sendStatus(403);
     }
 });
 
 router.get('/mygames', (req, res) => {
-    
+    if(req.isAuthenticated()){
+        const queryText = `SELECT * FROM "user_game" WHERE "user_id" = $1;`
+        pool.query(queryText, [req.user.id]).then((result) => {
+            res.send(result.rows)
+        }).catch((error) => {
+            console.log('Error in getting my games: ', error);
+            
+        })
+    } else{
+
+        //if req.isAuthenticated() is false, the forbidden error will appear
+        //on the webpage
+        res.sendStatus(403)
+    }
 })
 
 router.post('/gameinfo', (req, res) => {
@@ -93,7 +109,7 @@ router.post('/gameinfo', (req, res) => {
             res.sendStatus(500);
         })
         
-    }else {
+    } else{
         //if req.isAuthenticated() is false, the forbidden error will appear
         //on the webpage
         res.sendStatus(403);
