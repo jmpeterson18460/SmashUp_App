@@ -82,7 +82,8 @@ const mapStateToProps = state => ({
 
     state = {
       multi: null,
-      numOfPlayers: this.props.state.faction.numOfPlayers,
+      // numOfPlayers: this.props.state.faction.numOfPlayers,
+      count: 1,
       newInput: {
         playerName: this.props.user.userName,
         factionArray: [],
@@ -189,26 +190,44 @@ const mapStateToProps = state => ({
     //postGameInfo will then send a post request to the server with the newInput object;
     //clearAndSendState also clears the property values in the newInput object in state
     clearAndSendState = () => {
-      console.log('Clearing fields and sending state!');
 
-      this.props.dispatch({
-        type: 'POST_GAME_INFO',
-        payload: this.state.newInput
-      })
+      if(this.state.count > 1){
+        this.props.dispatch({
+          type: 'POST_GAME_INFO_W_GAME_ID',
+          payload: this.state.newInput
+        })
 
-      this.setState({
-        multi: null,
-        numOfPlayers: this.props.state.faction.numOfPlayers,
-        newInput: {
-          playerName: '',
-          factionArray: [],
-          points: '',
-          rank: '',
-          bases: '',
-          comments: ''
-        }
-      })
-
+        this.setState({
+          multi: null,
+          count: this.state.count + 1,
+          newInput: {
+            playerName: '',
+            factionArray: [],
+            points: '',
+            rank: '',
+            bases: '',
+            comments: ''
+          }
+        })
+      } else{
+        this.props.dispatch({
+          type: 'POST_GAME_INFO',
+          payload: this.state.newInput
+        })
+  
+        this.setState({
+          multi: null,
+          count: this.state.count + 1,
+          newInput: {
+            playerName: '',
+            factionArray: [],
+            points: '',
+            rank: '',
+            bases: '',
+            comments: ''
+          }
+        })
+      }
     }
 
     componentDidMount() {
@@ -224,9 +243,11 @@ const mapStateToProps = state => ({
       }
 
       render(){
-        console.log(this.state)
+        console.log('State: ', this.state, 'numOfPlayers: ', this.props.state.faction.numOfPlayers)
         const { classes } = this.props;
         let content = null;
+        let nextButton;
+        
 
         //factions is an array that contains all the entries from the faction table
         //in the database. Each entry is an object with the faction id and faction name
@@ -234,6 +255,16 @@ const mapStateToProps = state => ({
           value: faction.id,
           label: faction.name
         }));
+
+        //once the user has entered in the information for each player, the submit
+        //button will appear and take the user to the MyGameLogPage
+        if(this.state.count < this.props.state.faction.numOfPlayers){
+          nextButton = <Button variant="raised" color="primary" onClick={this.clearAndSendState}>NEXT</Button>
+        } else{
+          nextButton = <Button variant="raised" color="primary" onClick={this.clearAndSendState}>
+          <Link to="/mygamelog">SUBMIT</Link></Button>
+        }
+        
         
         //content will only be assigned if the user is still logged in
         if (this.props.user.userName) {
@@ -316,7 +347,8 @@ const mapStateToProps = state => ({
                 changes state when the user types in any comments */}
                 <p>Comments:<textarea className="textarea" value={this.state.newInput.comments} 
                 onChange={this.handleComments}/></p>
-                <Button variant="raised" color="primary" onClick={this.clearAndSendState}>NEXT</Button>
+                <p>{nextButton}</p>
+                
             </div>
                 
           );

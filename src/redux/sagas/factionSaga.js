@@ -24,7 +24,16 @@ function* postGameInfo(action) {
     try{
         yield call(axios.post, '/api/smashup/gameinfo', action.payload)
     } catch (error){
-        console.log('Error in posting factions: ', error);
+        console.log('Error in posting game info: ', error);
+        
+    }
+}
+
+function* postGameInfoWGameId(action){
+    try{
+        yield call(axios.post, '/api/smashup/gameinfowid', action.payload)
+    } catch(error){
+        console.log('Error in posting game info: ', error);
         
     }
 }
@@ -33,6 +42,7 @@ function* postGameInfo(action) {
 function* factionSaga() {
     yield takeLatest('FETCH_FACTION', fetchFaction)
     yield takeLatest('POST_GAME_INFO', postGameInfo)
+    yield takeLatest('POST_GAME_INFO_W_GAME_ID', postGameInfoWGameId)
   }
 
   export default factionSaga;
