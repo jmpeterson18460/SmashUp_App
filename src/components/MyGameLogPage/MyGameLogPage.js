@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Button from 'material-ui/Button';
+import { Link } from 'react-router-dom';
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 
@@ -30,6 +32,8 @@ class MyGameLogPage extends Component {
           <p>
             My Games
           </p>
+          <Button variant="raised" color="primary" >
+          <Link to="/postagame/numberofplayers">Post a Game!</Link></Button>
         </div>
       );
     }

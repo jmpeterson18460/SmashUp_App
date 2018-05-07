@@ -108,21 +108,15 @@ const mapStateToProps = state => ({
 
     handleFactions = name => value => {
       
-      //value is a string; this string consists of the ids of the factions selected by the user
-      //from the autocomplete box. The ids are separated by a comma e.g. '2,3'
+      //value is a string; this string consists of the names of the factions selected by the user
+      //from the autocomplete box. The ids are separated by a comma e.g. 'aliens,robots'
 
-      //convert value into an array where the elements the faction ids; these elements are
-      //of type string
+      //convert value into an array where the elements are the selected faction names; these
+      //elements are of type string
       if(value.search(',') > 0){
-        value = value.split(',');
-
-        //convert the elements from strings to integers in value
-        for(let i=0; i<value.length; i++){
-          value[i] = +value[i];
-        }   
+        value = value.split(',');  
         
-        //changes factionArray to an array of integers, where those integers are
-        //the faction id's from the database
+        //changes factionArray to an array of the faction names
         this.setState({
           ...this.state,
           [name]:value,
@@ -158,7 +152,7 @@ const mapStateToProps = state => ({
         ...this.state,
         newInput: {
           ...this.state.newInput,
-          rank: parseInt(event.target.value, 10)
+          rank: event.target.value
         }
       })
     }
@@ -188,7 +182,13 @@ const mapStateToProps = state => ({
     //sends a dispatch to the postGameInfo generator function in the factionSaga
     //with action 'POST_GAME_INFO' and payload of the newInput object in state;
     //postGameInfo will then send a post request to the server with the newInput object;
-    //clearAndSendState also clears the property values in the newInput object in state
+    //clearAndSendState also clears the property values in the newInput object in state;
+    //Once the user has created a game, this function will then send all subsequent dispatches
+    //to the postGameInfoWGameId generator function in the factionSaga with action
+    //'POST_GAME_INFO_W_GAME_ID' and payload of the newInput object in state; this will allow
+    //the user to submit the information of the other players to the game the user just created; 
+    //if this were not here, then when the user would enter in the information of the other players,
+    //that information would create a new game for each player
     clearAndSendState = () => {
 
       if(this.state.count > 1){
@@ -252,7 +252,7 @@ const mapStateToProps = state => ({
         //factions is an array that contains all the entries from the faction table
         //in the database. Each entry is an object with the faction id and faction name
         const factions = this.props.state.faction.factionName.map(faction => ({
-          value: faction.id,
+          value: faction.name,
           label: faction.name
         }));
 
@@ -309,28 +309,28 @@ const mapStateToProps = state => ({
                     <div className="radio">
                         <label>
                           {/* if checked is true, the radio button will be filled in */}
-                            <input type="radio" value="1" checked={this.state.newInput.rank === 1}
+                            <input type="radio" value="1st" checked={this.state.newInput.rank === '1st'}
                             onClick={this.handleRank}/>
                             1st
                         </label>
                         </div>
                         <div className="radio">
                         <label>
-                            <input type="radio" value="2" checked={this.state.newInput.rank === 2} 
+                            <input type="radio" value="2nd" checked={this.state.newInput.rank === '2nd'} 
                             onClick={this.handleRank}/>
                             2nd
                         </label>
                         </div>
                         <div className="radio">
                         <label>
-                            <input type="radio" value="3" checked={this.state.newInput.rank === 3}
+                            <input type="radio" value="3rd" checked={this.state.newInput.rank === '3rd'}
                             onClick={this.handleRank}/>
                             3rd
                         </label>
                         </div>
                         <div className="radio">
                         <label>
-                            <input type="radio" value="4" checked={this.state.newInput.rank === 4}
+                            <input type="radio" value="4th" checked={this.state.newInput.rank === '4th'}
                             onClick={this.handleRank}/>
                             4th
                         </label>

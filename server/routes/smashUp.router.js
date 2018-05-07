@@ -31,6 +31,10 @@ router.get('/faction', (req, res) => {
     }
 });
 
+router.get('/mygames', (req, res) => {
+    
+})
+
 router.post('/gameinfo', (req, res) => {
 
     //see router.get('/faction') for explanation of req.isAuthenticated()
