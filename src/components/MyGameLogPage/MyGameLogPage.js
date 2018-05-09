@@ -17,6 +17,10 @@ class MyGameLogPage extends Component {
     this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
 
     this.props.dispatch({
+      type:'FETCH_GAME_ID'
+  })
+
+    this.props.dispatch({
       type: 'FETCH_MY_GAMES'
     })
   }
@@ -35,9 +39,9 @@ class MyGameLogPage extends Component {
     if (this.props.user.userName) {
       content = (
         <div>
-          <p>
+          <h1 className='mygames'>
             My Games
-          </p>
+          </h1>
           <MyGames/>
           <Button variant="raised" color="primary" >
           <Link to="/postagame/numberofplayers">Post a Game!</Link></Button>

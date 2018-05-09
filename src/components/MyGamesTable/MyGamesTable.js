@@ -12,14 +12,21 @@ const mapStateToProps = state => ({
         this.props.dispatch({
             type:'FETCH_GAME_ID'
         })
+        
+    }
 
+    delTable = (event) => {
         this.props.dispatch({
-            type: 'FETCH_MY_GAMES'
-          })
+            type:'DEL_GAME',
+            payload: event.target.value
+        })
+        
     }
       
     render(){
-
+        console.log('games: ', this.props.state.faction.myGames);
+        console.log('game ids: ', this.props.state.faction.gameId);
+        
         //gameArray is an array whose elements are arrays; the elements of those arrays 
         //contain the game information of each player from a given game
         let gameArray = this.props.state.faction.gameId.map((gameId) => {
@@ -48,7 +55,8 @@ const mapStateToProps = state => ({
             //games is an array from gameArray whose elements are the game information of each
             //player that played that game
                 return (<tr key={game.id}><td>{game.player_name}</td><td>{game.faction1} / {game.faction2}
-                        </td><td>{game.points}</td><td>{game.rank}</td></tr>)
+                        </td><td>{game.points}</td><td>{game.rank}</td><td><button>edit</button>
+                        <button value={game.game_id} onClick={this.delTable}>delete</button></td></tr>)
             })
 
             //puts myGame into gameTable
@@ -61,8 +69,10 @@ const mapStateToProps = state => ({
 
             //gameTable is an array whose elements are arrays; inside those arrays are table rows
             return(<table><thead><tr><th>Players</th><th>Factions</th><th>Points</th><th>Rank</th>
-                    </tr></thead><tbody>{table}</tbody></table>)
+                    <th>Edit/Delete</th></tr></thead><tbody>{table}</tbody></table>)
         })
+        console.log('Array of Tables: ', finalTable);
+        
 
         return (
             <div>

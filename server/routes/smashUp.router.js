@@ -188,4 +188,30 @@ router.post('/gameinfowid', (req, res) => {
     }
 })
 
+router.delete('/delgame/:id', (req, res) => {
+    if(req.isAuthenticated()){
+        const queryText = `DELETE FROM "user_game" WHERE ("user_id" = $1 AND "game_id" = $2);`
+        pool.query(queryText, [req.user.id, req.params.id]).then((response) => {
+            res.sendStatus(200)
+        }).catch((error) => {
+            res.sendStatus(500)
+        })
+    }else{
+        res.sendStatus(403)
+    }
+})
+
+router.delete('/delgameid/:id', (req, res) => {
+    if(req.isAuthenticated()){
+        const queryText = `DELETE FROM "game" WHERE "id" = $1;`
+        pool.query(queryText, [req.params.id]).then((response) => {
+            res.sendStatus(200)
+        }).catch((error) => {
+            res.sendStatus(500)
+        })
+    }else{
+        res.sendStatus(403)
+    }
+})
+
 module.exports = router;

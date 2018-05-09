@@ -91,6 +91,34 @@ function* postGameInfoWGameId(action){
     }
 }
 
+function* delGame(action){
+    try{
+        yield call(axios.delete, '/api/smashup/delgame/' + action.payload)
+        yield put({
+            type: 'DEL_GAME_ID',
+            payload: action.payload
+        })
+        yield put({
+            type: 'FETCH_MY_GAMES'
+        })
+    }catch(error){
+        console.log('Error in deleting game: ', error);
+        
+    }
+}
+
+function* delGameId(action){
+    try{
+        yield call(axios.delete, '/api/smashup/delgameid/' + action.payload)
+        yield put({
+            type: 'FETCH_GAME_ID'
+        })
+    }catch(error){
+        console.log('Error in deleting game id: ', error);
+        
+    }
+}
+
 
 function* factionSaga() {
     yield takeLatest('FETCH_FACTION', fetchFaction)
@@ -98,6 +126,8 @@ function* factionSaga() {
     yield takeLatest('FETCH_GAME_ID', fetchGameId)
     yield takeLatest('POST_GAME_INFO', postGameInfo)
     yield takeLatest('POST_GAME_INFO_W_GAME_ID', postGameInfoWGameId)
+    yield takeLatest('DEL_GAME', delGame)
+    yield takeLatest('DEL_GAME_ID', delGameId)
   }
 
   export default factionSaga;
