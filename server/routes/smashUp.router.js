@@ -3,9 +3,6 @@ const pool = require('../modules/pool');
 const router = express.Router();
 let newGameId = 0;
 
-/**
- * GET route template
- */
 router.get('/faction', (req, res) => {
 
     //checks to see if the user has an account in the database;
@@ -13,7 +10,7 @@ router.get('/faction', (req, res) => {
     //will not have access to the results from the following query
     if(req.isAuthenticated()){
 
-        //brings in all factions from the faction table and puts them
+        //queryText brings in all factions from the faction table and puts them
         //in alphabetical order
         const queryText = `SELECT * FROM "faction" ORDER BY "name" ASC;`
 
@@ -22,6 +19,9 @@ router.get('/faction', (req, res) => {
         //requested it
         pool.query(queryText).then((result) => {
             res.send(result.rows)
+        
+        //if there was an error in getting the factions from the database,
+        //the error will be displayed in the console log
         }).catch((error) => {
             console.log('Error in getting factions: ', error);
             
@@ -35,24 +35,50 @@ router.get('/faction', (req, res) => {
 });
 
 router.get('/gameid', (req, res) => {
+
+    //see router.get('/faction') for explanation of req.isAuthenticated()
     if(req.isAuthenticated()){
+
+        //queryText returns all of the game ids from the game table
         const queryText =`SELECT "id" FROM "game";`
+
+        //sends query text to database; takes the result from the database
+        //and sends it back to the fetchGameId generator function from factionSaga that 
+        //requested it
         pool.query(queryText).then((result) => {
             res.send(result.rows)
+
+        //if there was an error in getting the factions from the database,
+        //the error will be displayed in the console log 
         }).catch((error) => {
             console.log('Error in getting game ids: ',error);
             
         })
     } else{
+
+        //if req.isAuthenticated() is false, the forbidden error will appear
+        //on the webpage
         res.sendStatus(403)
     }
 })
 
 router.get('/mygames', (req, res) => {
+
+    //see router.get('/faction') for explanation of req.isAuthenticated()
     if(req.isAuthenticated()){
+
+        //queryText returns all the games entered by the user based on
+        //their user id
         const queryText = `SELECT * FROM "user_game" WHERE "user_id" = $1;`
+
+        //sends query text to database; takes the result from the database
+        //and sends it back to the fetchMyGames generator function from factionSaga that 
+        //requested it
         pool.query(queryText, [req.user.id]).then((result) => {
             res.send(result.rows)
+
+        //if there was an error in getting the factions from the database,
+        //the error will be displayed in the console log
         }).catch((error) => {
             console.log('Error in getting my games: ', error);
             
