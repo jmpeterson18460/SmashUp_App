@@ -11,6 +11,24 @@ form {
     border-radius: 2px;
 }
 
+table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 30%;
+    height: 140px;
+    background-color: white;
+}
+
+th, td {
+    border: 2px solid black;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
 .formnumofplayers{
     background-color: #dbd5d5;
     width: 10%;
