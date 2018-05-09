@@ -28,7 +28,9 @@ function* fetchMyGames(action){
 
         //myGames sends get request to router '/api/smashup/faction' and receives
         //back all of the games the user has submitted and stores them in myGames.data
+        
         const myGames = yield call(axios.get, '/api/smashup/mygames')
+        
 
         //sends all of the user's submitted games to myGames reducer via action 'SET_MY_GAMES'
         //and payload myGames.data
@@ -41,6 +43,21 @@ function* fetchMyGames(action){
     //will display in the console log
     } catch(error) {
         console.log('Error in getting my games: ', error);
+        
+    }
+}
+
+function* fetchGameId(action) {
+    try{
+        const gameId = yield call(axios.get, '/api/smashup/gameid')
+        console.log('gameId.data: ', gameId.data);
+        yield put({
+            
+            type: 'SET_GAME_ID',
+            payload: gameId.data
+        })
+    }catch(error){
+        console.log('Error in getting game id: ', error);
         
     }
 }
@@ -78,6 +95,7 @@ function* postGameInfoWGameId(action){
 function* factionSaga() {
     yield takeLatest('FETCH_FACTION', fetchFaction)
     yield takeLatest('FETCH_MY_GAMES', fetchMyGames)
+    yield takeLatest('FETCH_GAME_ID', fetchGameId)
     yield takeLatest('POST_GAME_INFO', postGameInfo)
     yield takeLatest('POST_GAME_INFO_W_GAME_ID', postGameInfoWGameId)
   }

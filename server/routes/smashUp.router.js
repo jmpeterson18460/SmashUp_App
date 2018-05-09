@@ -34,6 +34,20 @@ router.get('/faction', (req, res) => {
     }
 });
 
+router.get('/gameid', (req, res) => {
+    if(req.isAuthenticated()){
+        const queryText =`SELECT "id" FROM "game";`
+        pool.query(queryText).then((result) => {
+            res.send(result.rows)
+        }).catch((error) => {
+            console.log('Error in getting game ids: ',error);
+            
+        })
+    } else{
+        res.sendStatus(403)
+    }
+})
+
 router.get('/mygames', (req, res) => {
     if(req.isAuthenticated()){
         const queryText = `SELECT * FROM "user_game" WHERE "user_id" = $1;`
