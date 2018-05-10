@@ -8,14 +8,10 @@ const mapStateToProps = state => ({
 
   class MyGames extends Component{
 
-    componentDidMount() {
-        this.props.dispatch({
-            type:'FETCH_GAME_ID'
-        })
-        
-    }
-
+    //delTable deletes the table clicked on by the user
     delTable = (event) => {
+
+        //sends action 'DEL_GAME' and payload of game id to generator function delGame;
         this.props.dispatch({
             type:'DEL_GAME',
             payload: event.target.value
@@ -71,8 +67,6 @@ const mapStateToProps = state => ({
             return(<table><thead><tr><th>Players</th><th>Factions</th><th>Points</th><th>Rank</th>
                     <th>Edit/Delete</th></tr></thead><tbody>{table}</tbody></table>)
         })
-        console.log('Array of Tables: ', finalTable);
-        
 
         return (
             <div>

@@ -32,8 +32,8 @@ function* fetchMyGames(action){
         const myGames = yield call(axios.get, '/api/smashup/mygames')
         
 
-        //sends all of the user's submitted games to myGames reducer via action 'SET_MY_GAMES'
-        //and payload myGames.data
+        //sets state of myGames reducer with all of the user's submitted games 
+        //via action 'SET_MY_GAMES' and payload myGames.data
         yield put({
             type: 'SET_MY_GAMES',
             payload: myGames.data
@@ -49,13 +49,19 @@ function* fetchMyGames(action){
 
 function* fetchGameId(action) {
     try{
+
+        //gameId contains all of the game ids from the game table in the database
         const gameId = yield call(axios.get, '/api/smashup/gameid')
-        console.log('gameId.data: ', gameId.data);
+
+        //sets state of gameId reducer with all of the game ids via 'SET_GAME_ID'
+        //and payload gameId.data
         yield put({
-            
             type: 'SET_GAME_ID',
             payload: gameId.data
         })
+
+    //if there is an error in sending get request to router, the error
+    //will display in the console log
     }catch(error){
         console.log('Error in getting game id: ', error);
         
@@ -92,15 +98,25 @@ function* postGameInfoWGameId(action){
 }
 
 function* delGame(action){
+
+    //sends the game id of the game to be deleted to router '/api/smashup/delgame/' in order
+    //for the info of that game to be deleted from the user_game table in the database
     try{
         yield call(axios.delete, '/api/smashup/delgame/' + action.payload)
+
+        //sends the same game id as above to the delGameId generator function
         yield put({
             type: 'DEL_GAME_ID',
             payload: action.payload
         })
+
+        //updates state of myGames reducer without the game that was deleted
         yield put({
             type: 'FETCH_MY_GAMES'
         })
+
+    //if there is an error in sending delete request to router, the error
+    //will display in the console log
     }catch(error){
         console.log('Error in deleting game: ', error);
         
@@ -108,11 +124,19 @@ function* delGame(action){
 }
 
 function* delGameId(action){
+
+    //sends the game id of the game to be deleted to router '/api/smashup/delgameid/' 
+    //and deletes the game id of the game to be deleted
     try{
         yield call(axios.delete, '/api/smashup/delgameid/' + action.payload)
+
+        //updates state of gameId reducer without the deleted game id
         yield put({
             type: 'FETCH_GAME_ID'
         })
+
+    //if there is an error in sending delete request to router, the error
+    //will display in the console log
     }catch(error){
         console.log('Error in deleting game id: ', error);
         

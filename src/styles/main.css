@@ -97,6 +97,11 @@ input[type="submit"] {
     width: 20%;
 }
 
+a{
+    color: white;
+    text-decoration: none;
+}
+
 ul {
     list-style-type: none;
     margin: 0;

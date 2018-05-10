@@ -16,10 +16,12 @@ class MyGameLogPage extends Component {
   componentDidMount() {
     this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
 
+    //sets state of gameId reducer to all of the game ids from the database
     this.props.dispatch({
       type:'FETCH_GAME_ID'
   })
 
+    //sets state of myGames reducer to all of the games from the database
     this.props.dispatch({
       type: 'FETCH_MY_GAMES'
     })
@@ -43,7 +45,7 @@ class MyGameLogPage extends Component {
             My Games
           </h1>
           <MyGames/>
-          <Button variant="raised" color="primary" >
+          <Button variant="raised" color="primary" className='buttonstyle'>
           <Link to="/postagame/numberofplayers">Post a Game!</Link></Button>
         </div>
       );
