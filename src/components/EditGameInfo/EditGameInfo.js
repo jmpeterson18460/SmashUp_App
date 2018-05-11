@@ -78,13 +78,14 @@ const mapStateToProps = state => ({
     );
   }
 
-  class GameInfo extends Component {
+  class EditGameInfo extends Component {
 
     state = {
       multi: null,
       // numOfPlayers: this.props.state.faction.numOfPlayers,
       count: 1,
       newInput: {
+        game_id: 0,
         playerName: this.props.user.userName,
         factionArray: [],
         points: '',
@@ -189,11 +190,10 @@ const mapStateToProps = state => ({
     //the user to submit the information of the other players to the game the user just created; 
     //if this were not here, then when the user would enter in the information of the other players,
     //that information would create a new game for each player
-    clearAndSendState = () => {
+    clearAndUpdateGame = () => {
 
-      if(this.state.count > 1){
         this.props.dispatch({
-          type: 'POST_GAME_INFO_W_GAME_ID',
+          type: 'EDIT_GAME',
           payload: this.state.newInput
         })
 
@@ -201,38 +201,34 @@ const mapStateToProps = state => ({
           multi: null,
           count: this.state.count + 1,
           newInput: {
-            playerName: '',
+            game_id: this.props.state.faction.singleGame[this.state.count].game_id,
+            playerName: this.props.state.faction.singleGame[this.state.count].player_name,
             factionArray: [],
-            points: '',
+            points: this.props.state.faction.singleGame[this.state.count].points,
             rank: '',
             bases: '',
             comments: ''
           }
-        })
-      } else{
-        this.props.dispatch({
-          type: 'POST_GAME_INFO',
-          payload: this.state.newInput
-        })
-  
-        this.setState({
-          multi: null,
-          count: this.state.count + 1,
-          newInput: {
-            playerName: '',
-            factionArray: [],
-            points: '',
-            rank: '',
-            bases: '',
-            comments: ''
-          }
-        })
-      }
+        }) 
     }
 
     componentDidMount() {
         this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
         this.props.dispatch({type: 'FETCH_FACTION'})
+      }
+
+      componentWillReceiveProps(nextProps){
+        this.setState({
+          ...this.state,
+          newInput: {
+            ...this.state.newInput,
+            game_id: nextProps.state.faction.singleGame[0].game_id,
+            playerName: nextProps.state.faction.singleGame[0].player_name,
+            points: nextProps.state.faction.singleGame[0].points,
+            bases: nextProps.state.faction.singleGame[0].bases,
+            comments: nextProps.state.faction.singleGame[0].comments
+          }
+        })
       }
       
     
@@ -243,10 +239,12 @@ const mapStateToProps = state => ({
       }
 
       render(){
-        console.log('State: ', this.state, 'numOfPlayers: ', this.props.state.faction.numOfPlayers)
+
         const { classes } = this.props;
         let content = null;
         let nextButton;
+        let bases;
+        let comments;
         
 
         //factions is an array that contains all the entries from the faction table
@@ -258,11 +256,19 @@ const mapStateToProps = state => ({
 
         //once the user has entered in the information for each player, the submit
         //button will appear and take the user to the MyGameLogPage
-        if(this.state.count < this.props.state.faction.numOfPlayers){
-          nextButton = <Button variant="raised" color="primary" onClick={this.clearAndSendState}>NEXT</Button>
+        if(this.state.count < this.props.state.faction.singleGame.length){
+          nextButton = <Button variant="raised" color="primary" onClick={this.clearAndUpdateGame}>NEXT</Button>
         } else{
-          nextButton = <Button variant="raised" color="primary" onClick={this.clearAndSendState}>
+          nextButton = <Button variant="raised" color="primary" onClick={this.clearAndUpdateGame}>
           <Link to="/mygamelog">SUBMIT</Link></Button>
+        }
+
+        if(this.state.count === 1){
+          bases = <p>Bases:<textarea className="textarea" value={this.state.newInput.bases} 
+          onChange={this.handleBases}/></p>
+
+          comments = <p>Comments:<textarea className="textarea" value={this.state.newInput.comments} 
+          onChange={this.handleComments}/></p>
         }
         
         
@@ -284,7 +290,7 @@ const mapStateToProps = state => ({
                     inputComponent={SelectWrapped}
                     value={this.state.multi}
                     onChange={this.handleFactions('multi')}
-                    placeholder="Select 2 factions"
+                    placeholder="Please re-enter your factions"
                     name="react-select-chip"
                     inputProps={{
                       classes,
@@ -338,15 +344,16 @@ const mapStateToProps = state => ({
                   </form>
                 </div>
 
-                {/* Here the user enters which bases were used for the game; changes
-                state when the user types in the bases that were used */}
-                <p>Bases:<textarea className="textarea" value={this.state.newInput.bases} 
-                onChange={this.handleBases}/></p>
+                <div>
 
-                {/* Here the user can enter any comments they want to add about the game;
-                changes state when the user types in any comments */}
-                <p>Comments:<textarea className="textarea" value={this.state.newInput.comments} 
-                onChange={this.handleComments}/></p>
+                    {/* Here the user enters which bases were used for the game; changes
+                    state when the user types in the bases that were used */}
+                    {bases}
+
+                    {/* Here the user can enter any comments they want to add about the game;
+                    changes state when the user types in any comments */}
+                    {comments}
+                </div>
                 <p>{nextButton}</p>
                 
             </div>
@@ -364,4 +371,4 @@ const mapStateToProps = state => ({
   }
 
   //allows the class GameInfo to send dispatches to redux
-  export default connect(mapStateToProps)(GameInfo);
+  export default connect(mapStateToProps)(EditGameInfo);

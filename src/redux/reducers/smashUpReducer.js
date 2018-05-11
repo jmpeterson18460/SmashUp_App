@@ -35,9 +35,17 @@ const gameId = (state = [], action) => {
     return state
 }
 
+const singleGame = (state = [{game_id: 0, player_name: '', points: 0, bases: '', comments: ''}], action) => {
+    if(action.type === 'SET_MY_GAME'){
+        return action.payload
+    }
+    return state
+}
+
 export default combineReducers({
     factionName,
     numOfPlayers,
     myGames,
-    gameId
+    gameId,
+    singleGame
 })

@@ -347,17 +347,17 @@ const mapStateToProps = state => ({
                         </div>
                   </form>
                 </div>
-
-                {/* Here the user enters which bases were used for the game; changes
-                state when the user types in the bases that were used */}
                 
                 <div>
+
+                  {/* Here the user enters which bases were used for the game; changes
+                state when the user types in the bases that were used */}
                   {bases}
+
+                  {/* Here the user can enter any comments they want to add about the game;
+                changes state when the user types in any comments */}
                   {comments}
                 </div>
-
-                {/* Here the user can enter any comments they want to add about the game;
-                changes state when the user types in any comments */}
                 
                 <p>{nextButton}</p>
                 

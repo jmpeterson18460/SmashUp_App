@@ -47,6 +47,19 @@ function* fetchMyGames(action){
     }
 }
 
+function* fetchGame(action){
+    try{
+        const game = yield call(axios.get, '/api/smashup/singlegame?id=' + action.payload.game_id)
+        yield put({
+            type: 'SET_MY_GAME',
+            payload: game.data
+        })
+    }catch(error){
+        console.log('Error in getting game: ', error);
+        
+    }
+}
+
 function* fetchGameId(action) {
     try{
 
@@ -99,7 +112,7 @@ function* postGameInfoWGameId(action){
 
 function* editGame(action){
     try{
-        yield call(axios.put, '/api/smashup/editgame/' + action.payload.game_id, action.payload)
+        yield call(axios.put, '/api/smashup/editgame', action.payload)
         yield put({
             type: 'FETCH_MY_GAMES'
         })
@@ -159,6 +172,7 @@ function* delGameId(action){
 function* factionSaga() {
     yield takeLatest('FETCH_FACTION', fetchFaction)
     yield takeLatest('FETCH_MY_GAMES', fetchMyGames)
+    yield takeLatest('FETCH_GAME', fetchGame)
     yield takeLatest('FETCH_GAME_ID', fetchGameId)
     yield takeLatest('POST_GAME_INFO', postGameInfo)
     yield takeLatest('POST_GAME_INFO_W_GAME_ID', postGameInfoWGameId)

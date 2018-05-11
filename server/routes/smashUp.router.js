@@ -91,6 +91,20 @@ router.get('/mygames', (req, res) => {
     }
 })
 
+//gets a single game from the database
+router.get('/singlegame', (req, res) => {
+    if(req.isAuthenticated){
+        const queryText = `SELECT * FROM "user_game" WHERE ("user_id" = $1 AND "game_id" = $2);`
+        pool.query(queryText, [req.user.id, req.query.id]).then((result) => {
+            res.send(result.rows)
+        }).catch((error) => {
+            console.log('Error in getting game: ', error);
+        })
+    }else{
+        res.sendStatus(403)
+    }
+})
+
 router.post('/gameinfo', (req, res) => {
 
     //see router.get('/faction') for explanation of req.isAuthenticated()
@@ -188,6 +202,25 @@ router.post('/gameinfowid', (req, res) => {
     }
 })
 
+router.put('/editgame', (req, res) => {
+    if(req.isAuthenticated()){
+        const game = req.body
+        const queryText = `UPDATE "user_game" SET "player_name" = $1, "faction1" = $2,
+        "faction2" = $3, "points" = $4, "rank" = $5, "bases" = $6, "comments" = $7
+        WHERE ("game_id" = $8 AND "player_name" = $9);`
+
+        pool.query(queryText, [game.playerName, game.factionArray[0], game.factionArray[1],
+        game.points, game.rank, game.bases, game.comments, game.game_id, game.playerName]).then((response) => {
+            res.sendStatus(201)
+        }).catch((error) => {
+            console.log('Error in updating game: ', error);
+            res.sendStatus(500)
+        })
+    } else{
+        res.sendStatus(403)
+    }
+})
+
 router.delete('/delgame/:id', (req, res) => {
     if(req.isAuthenticated()){
         const queryText = `DELETE FROM "user_game" WHERE ("user_id" = $1 AND "game_id" = $2);`
@@ -196,7 +229,7 @@ router.delete('/delgame/:id', (req, res) => {
         }).catch((error) => {
             res.sendStatus(500)
         })
-    }else{
+    } else{
         res.sendStatus(403)
     }
 })

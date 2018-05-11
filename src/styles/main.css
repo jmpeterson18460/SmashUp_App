@@ -97,6 +97,10 @@ input[type="submit"] {
     width: 20%;
 }
 
+.edit{
+    color: #6e6b6b
+}
+
 a{
     color: white;
     text-decoration: none;

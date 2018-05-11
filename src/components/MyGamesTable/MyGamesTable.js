@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import { IconButton } from 'material-ui';
+import { Link } from 'react-router-dom';
 
 const mapStateToProps = state => ({
     user: state.user,
@@ -22,17 +23,15 @@ const mapStateToProps = state => ({
         
     }
 
-    editTable = (game) => {
+    getGame = (game) => {
 
         this.props.dispatch({
-            type: 'EDIT_GAME',
+            type: 'FETCH_GAME',
             payload: game
         })
     }
       
     render(){
-        console.log('games: ', this.props.state.faction.myGames);
-        console.log('game ids: ', this.props.state.faction.gameId);
         
         //gameArray is an array whose elements are arrays; the elements of those arrays 
         //contain the game information of each player from a given game
@@ -55,6 +54,7 @@ const mapStateToProps = state => ({
         //the result of this for loop will be the array gameTable whose elements are arrays;
         //inside those arrays are table rows
         for(let games of gameArray){
+            
 
             //myGame is an array of table rows
             let myGame = games.map((game) => {
@@ -62,8 +62,11 @@ const mapStateToProps = state => ({
             //games is an array from gameArray whose elements are the game information of each
             //player that played that game
                 return (<tr key={game.id}><td>{game.player_name}</td><td>{game.faction1} / {game.faction2}
-                        </td><td>{game.points}</td><td>{game.rank}</td><td><IconButton aria-label="Edit"><EditIcon onClick={()=>{this.editTable(game)}}/></IconButton>
-                        <IconButton aria-label="Delete"><DeleteIcon value={game.game_id} onClick={()=>{this.delTable(game.game_id)}}/></IconButton></td></tr>)
+                        </td><td>{game.points}</td><td>{game.rank}</td>
+                        <td><IconButton aria-label="Edit"><Link className="edit" to="/editgameinfo"><EditIcon onClick={()=>{this.getGame(game)}}/></Link>
+                        </IconButton><IconButton aria-label="Delete">
+                        <DeleteIcon value={game.game_id} onClick={()=>{this.delTable(game.game_id)}}/></IconButton></td>
+                        </tr>)
             })
 
             //puts myGame into gameTable
@@ -75,8 +78,8 @@ const mapStateToProps = state => ({
         let finalTable = gameTable.map((table) => {
 
             //gameTable is an array whose elements are arrays; inside those arrays are table rows
-            return(<table><thead><tr><th>Players</th><th>Factions</th><th>Points</th><th>Rank</th>
-                    <th>Edit/Delete</th></tr></thead><tbody>{table}</tbody></table>)
+            return(<div><table><thead><tr><th>Players</th><th>Factions</th><th>Points</th><th>Rank</th>
+                    <th>Edit/Delete</th></tr></thead><tbody>{table}</tbody></table></div>)
         })
 
         return (

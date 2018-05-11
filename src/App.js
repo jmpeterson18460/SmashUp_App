@@ -14,6 +14,7 @@ import MyStatsPage from './components/MyStatsPage/MyStatsPage';
 import MyGameLog from './components/MyGameLogPage/MyGameLogPage';
 import NumberOfPlayers from './components/PostAGamePage/NumberOfPlayers'
 import GameInfo from './components/PostAGamePage/GameInfo';
+import EditGameInfo from './components/EditGameInfo/EditGameInfo'
 
 import './styles/main.css';
 
@@ -50,6 +51,10 @@ const App = () => (
         <Route
           path="/postagame/gameinfo"
           component={GameInfo}
+        />
+        <Route
+          path="/editgameinfo"
+          component={EditGameInfo}
         />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
