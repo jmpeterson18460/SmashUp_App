@@ -40,7 +40,7 @@ router.get('/gameid', (req, res) => {
     if(req.isAuthenticated()){
 
         //queryText returns all of the game ids from the game table
-        const queryText =`SELECT "id" FROM "game";`
+        const queryText =`SELECT "id" FROM "game" ORDER BY "id" DESC;`
 
         //sends query text to database; takes the result from the database
         //and sends it back to the fetchGameId generator function from factionSaga that 

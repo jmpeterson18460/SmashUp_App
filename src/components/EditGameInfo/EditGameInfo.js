@@ -247,8 +247,6 @@ const mapStateToProps = state => ({
         const { classes } = this.props;
         let content = null;
         let nextButton;
-        let bases;
-        let comments;
         
 
         //factions is an array that contains all the entries from the faction table
@@ -265,14 +263,6 @@ const mapStateToProps = state => ({
         } else{
           nextButton = <Button variant="raised" color="primary" onClick={this.clearAndSendState}>
           <Link to="/mygamelog">SUBMIT</Link></Button>
-        }
-
-        if(this.state.count === 1){
-          bases = <p>Bases:<textarea className="textarea" value={this.state.newInput.bases} 
-          onChange={this.handleBases}/></p>
-
-          comments = <p>Comments:<textarea className="textarea" value={this.state.newInput.comments} 
-          onChange={this.handleComments}/></p>
         }
         
         
@@ -350,15 +340,13 @@ const mapStateToProps = state => ({
 
                 {/* Here the user enters which bases were used for the game; changes
                 state when the user types in the bases that were used */}
-                
-                <div>
-                  {bases}
-                  {comments}
-                </div>
+                <p>Bases:<textarea className="textarea" value={this.state.newInput.bases} 
+                onChange={this.handleBases}/></p>
 
                 {/* Here the user can enter any comments they want to add about the game;
                 changes state when the user types in any comments */}
-                
+                <p>Comments:<textarea className="textarea" value={this.state.newInput.comments} 
+                onChange={this.handleComments}/></p>
                 <p>{nextButton}</p>
                 
             </div>

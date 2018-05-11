@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import BarGraph from '../MainGraph/MainGraph'
 
 import Nav from '../../components/Nav/Nav';
 
@@ -11,7 +12,10 @@ import Button from 'material-ui/Button';
 //allows us to get information from redux state
 const mapStateToProps = state => ({
   user: state.user,
+  state
 });
+
+
 
 class UserPage extends Component {
   componentDidMount() {
@@ -41,6 +45,8 @@ class UserPage extends Component {
           >
             Welcome, { this.props.user.userName }! 
           </h1>
+
+          <BarGraph/>
 
           {/* When clicked, the user will be brought to the numberofplayers page */}
           <Button variant="raised" color="primary" >

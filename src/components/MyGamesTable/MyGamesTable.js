@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
+import { IconButton } from 'material-ui';
 
 const mapStateToProps = state => ({
     user: state.user,
@@ -9,14 +12,22 @@ const mapStateToProps = state => ({
   class MyGames extends Component{
 
     //delTable deletes the table clicked on by the user
-    delTable = (event) => {
+    delTable = (gameId) => {
 
         //sends action 'DEL_GAME' and payload of game id to generator function delGame;
         this.props.dispatch({
             type:'DEL_GAME',
-            payload: event.target.value
+            payload: gameId
         })
         
+    }
+
+    editTable = (game) => {
+
+        this.props.dispatch({
+            type: 'EDIT_GAME',
+            payload: game
+        })
     }
       
     render(){
@@ -51,8 +62,8 @@ const mapStateToProps = state => ({
             //games is an array from gameArray whose elements are the game information of each
             //player that played that game
                 return (<tr key={game.id}><td>{game.player_name}</td><td>{game.faction1} / {game.faction2}
-                        </td><td>{game.points}</td><td>{game.rank}</td><td><button>edit</button>
-                        <button value={game.game_id} onClick={this.delTable}>delete</button></td></tr>)
+                        </td><td>{game.points}</td><td>{game.rank}</td><td><IconButton aria-label="Edit"><EditIcon onClick={()=>{this.editTable(game)}}/></IconButton>
+                        <IconButton aria-label="Delete"><DeleteIcon value={game.game_id} onClick={()=>{this.delTable(game.game_id)}}/></IconButton></td></tr>)
             })
 
             //puts myGame into gameTable

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import BarGraph from '../MyGraph/MyGraph'
+import Button from 'material-ui/Button';
+import { Link } from 'react-router-dom';
 
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
@@ -30,6 +33,9 @@ class MyStatsPage extends Component {
           <p>
             My Stats
           </p>
+          <BarGraph/>
+          <Button variant="raised" color="primary" className='buttonstyle'>
+          <Link to="/postagame/numberofplayers">Post a Game!</Link></Button>
         </div>
       );
     }

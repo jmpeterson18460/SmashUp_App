@@ -97,6 +97,18 @@ function* postGameInfoWGameId(action){
     }
 }
 
+function* editGame(action){
+    try{
+        yield call(axios.put, '/api/smashup/editgame/' + action.payload.game_id, action.payload)
+        yield put({
+            type: 'FETCH_MY_GAMES'
+        })
+    }catch(error){
+        console.log('Error in editing game: ', error);
+        
+    }
+}
+
 function* delGame(action){
 
     //sends the game id of the game to be deleted to router '/api/smashup/delgame/' in order
@@ -150,6 +162,7 @@ function* factionSaga() {
     yield takeLatest('FETCH_GAME_ID', fetchGameId)
     yield takeLatest('POST_GAME_INFO', postGameInfo)
     yield takeLatest('POST_GAME_INFO_W_GAME_ID', postGameInfoWGameId)
+    yield takeLatest('EDIT_GAME', editGame)
     yield takeLatest('DEL_GAME', delGame)
     yield takeLatest('DEL_GAME_ID', delGameId)
   }
