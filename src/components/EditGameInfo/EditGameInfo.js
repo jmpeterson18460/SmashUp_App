@@ -191,11 +191,12 @@ const mapStateToProps = state => ({
     //if this were not here, then when the user would enter in the information of the other players,
     //that information would create a new game for each player
     clearAndUpdateGame = () => {
+      if(this.state.count < this.props.state.faction.singleGame.length){
 
-        this.props.dispatch({
-          type: 'EDIT_GAME',
-          payload: this.state.newInput
-        })
+        // this.props.dispatch({
+        //   type: 'EDIT_GAME',
+        //   payload: this.state.newInput
+        // })
 
         this.setState({
           multi: null,
@@ -210,6 +211,12 @@ const mapStateToProps = state => ({
             comments: ''
           }
         }) 
+      } else{
+        // this.props.dispatch({
+        //   type: 'EDIT_GAME',
+        //   payload: this.state.newInput
+        // })
+      }
     }
 
     componentDidMount() {
