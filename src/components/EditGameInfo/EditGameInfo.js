@@ -193,10 +193,10 @@ const mapStateToProps = state => ({
     clearAndUpdateGame = () => {
       if(this.state.count < this.props.state.faction.singleGame.length){
 
-        // this.props.dispatch({
-        //   type: 'EDIT_GAME',
-        //   payload: this.state.newInput
-        // })
+        this.props.dispatch({
+          type: 'EDIT_GAME',
+          payload: this.state.newInput
+        })
 
         this.setState({
           multi: null,
@@ -212,10 +212,10 @@ const mapStateToProps = state => ({
           }
         }) 
       } else{
-        // this.props.dispatch({
-        //   type: 'EDIT_GAME',
-        //   payload: this.state.newInput
-        // })
+        this.props.dispatch({
+          type: 'EDIT_GAME',
+          payload: this.state.newInput
+        })
       }
     }
 

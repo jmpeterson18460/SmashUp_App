@@ -113,9 +113,9 @@ function* postGameInfoWGameId(action){
 function* editGame(action){
     try{
         yield call(axios.put, '/api/smashup/editgame', action.payload)
-        yield put({
-            type: 'FETCH_MY_GAMES'
-        })
+        // yield put({
+        //     type: 'FETCH_MY_GAMES'
+        // })
     }catch(error){
         console.log('Error in editing game: ', error);
         
