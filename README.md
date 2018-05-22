@@ -1,15 +1,14 @@
-# Express/Passport with React
-This version uses React to control the login requests and redirection in coordination with client-side routing.
+# Background
+My friends and I are obsessed with the shuffle-building card game called Smash Up.  A shuffle building card game means that the game only consists of decks of cards; each player selects two decks, shuffles them together, and then uses that shuffled deck to play the game.  Each deck of cards is called a faction; a faction is nothing more than a category of characters.  For example, there is a ninja faction which means all of the cards in that deck has everything to do with ninjas.  
 
-We **STONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+The first person to get 15 points wins.  The way you get points is by conquering bases; each base has a given point value.  
 
-## Prerequisites
+## Purpose
+There are three reasons why I created this app: 
 
-Before you get started, make sure you have the following software installed on your computer:
-
-- [Node.js](https://nodejs.org/en/)
-- [PostrgeSQL](https://www.postgresql.org/)
-- [Nodemon](https://nodemon.io/)
+- To determine which faction is the best
+- To have a way to keep track of the stats of games in an organized and neat fastion
+- To provide a way for others to input stats from their games
 
 ## Create database and table
 

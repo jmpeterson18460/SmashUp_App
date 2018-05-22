@@ -28,7 +28,6 @@ function* fetchMyGames(action){
 
         //myGames sends get request to router '/api/smashup/faction' and receives
         //back all of the games the user has submitted and stores them in myGames.data
-        
         const myGames = yield call(axios.get, '/api/smashup/mygames')
         
 
@@ -48,12 +47,21 @@ function* fetchMyGames(action){
 }
 
 function* fetchGame(action){
+
+    //fetchGame sends get request to router '/api/smashup/singlegame' with an attached game id
+    //and returns the game that matches that game id and stores it in game.data
     try{
         const game = yield call(axios.get, '/api/smashup/singlegame?id=' + action.payload.game_id)
+
+        //sets state of singleGame reducer with all of the information of that game 
+        //via action 'SET_MY_GAMES' and payload myGames.data
         yield put({
             type: 'SET_MY_GAME',
             payload: game.data
         })
+        
+    //if there is an error in sending get request to router, the error
+    //will display in the console log
     }catch(error){
         console.log('Error in getting game: ', error);
         

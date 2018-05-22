@@ -4,6 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import { IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
+import Dialogbox from '../DeleteDialogBox/DeleteDialogBox'
 
 const mapStateToProps = state => ({
     user: state.user,
@@ -11,6 +12,26 @@ const mapStateToProps = state => ({
   });
 
   class MyGames extends Component{
+
+    // state = {
+    //     open: false,
+    //     game: 0
+    //   };
+    
+    //   handleClickOpen = (gameId) => {
+    //     this.setState({ open: true, game: gameId });
+    //   };
+    
+    //   handleClose = () => {
+    //     this.setState({ open: false, gameId: 0});
+    //   };
+
+    //   delTableBeta = () => {
+    //       this.props.dispatch({
+    //           type: 'DEL_GAME',
+    //           payload: this.state.game
+    //       })
+    //   }
 
     //delTable deletes the table clicked on by the user
     delTable = (gameId) => {
@@ -86,6 +107,9 @@ const mapStateToProps = state => ({
             <div>
                 {finalTable}
             </div>
+            
+            
+
         )
     }
 
