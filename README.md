@@ -10,19 +10,10 @@ There are three reasons why I created this app:
 - To have a way to keep track of the stats of games in an organized and neat fastion
 - To provide a way for others to input stats from their games
 
-## Create database and table
+## Homepage
+After logging in, the user will see the following graph:
 
-Create a new database called `prime_app` and create a `person` table:
-
-```SQL
-CREATE TABLE person (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR (80) UNIQUE NOT NULL,
-    password VARCHAR (1000) NOT NULL
-);
-```
-
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+![VSCode Toolbar](documentation/images/hompage_graph.png)
 
 ## Download (Don't Clone) This Repository
 
