@@ -15,61 +15,15 @@ After logging in, the user will see the following graph:
 
 ![VSCode Toolbar](documentation/images/hompage_graph.png)
 
-## Download (Don't Clone) This Repository
+This graph displays the top five factions based on their winning percentage of every game entered by every user.  The reason for basing it off of winning percentage is because the makers of Smash Up create new factions each year; if the top factions were based on number of wins, the older factions would have an unfair advantage over the newer factions.
 
-* Don't Fork or Clone. Instead, click the `Clone or Download` button and select `Download Zip`.
-* Unzip the project and start with the code in that folder.
-* Create a new GitHub project and push this code to the new repository.
+## Post A Game!
+In order for a user to record a game, he or she will click on the Post A Game! button on the bottom of any view.  After selecting the number of players, the following screen will be displayed: 
+![VSCode Toolbar](documentation/images/gameinfo_input.png)
+After recording the user's information, the user will click the next button and input the other players' information.
 
-## Development Setup Instructions
+## MyGameLog
+Once a game has been submitted, the user will be taken to the MyGameLog page.  Here the user can see all of the games he or she has inputted.  If there is a mistake in one of the entries, the user can edit a game by click on the pencil icon.  If the user wants to delete a game, he or she can click on the garabage icon
 
-* Run `npm install`
-* Create a `.env` file at the root of the project and paste this line into the file:
-    ```
-    SERVER_SESSION_SECRET=superDuperSecret
-    ```
-    While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-* Start postgres if not running already by using `brew services start postgresql`
-* Run `npm run dev`
-* Navigate to `localhost:3000`
+![VSCode Toolbar](documentation/images/mygamelog.png)
 
-## Debugging
-
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run dev:client`. Start the debugging server by selecting the Debug button.
-
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
-
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
-
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
-
-## Linting
-
-The Airbnb ESLint for react is a part of this project. If you would like to take advantage of this in VS Code, you can add the `ESLint` extension. Click the `Extensions` button (the button right below the `Debug`) and search for `ESLint`. Click `install` for the first result and then click `Reload`. Then it should be all set up!
-
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
-
-## Production Build
-
-This is the build Heroku will run, but during development, you will likely not need to use it.
-
-* Start postgres if not running already by using `brew services start postgresql`
-* Run `npm start`
-* Navigate to `localhost:5000`
-
-## Lay of the Land
-
-* `src/` contains the React application
-* `public/` contains static assets for the client-side
-* `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-* `server/` contains the Express App
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Herkoku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
