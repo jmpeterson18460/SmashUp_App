@@ -19,12 +19,15 @@ class NavBar extends Component {
   render(){
 
     //creates a navigation bar that allows the user to access multiple pages on the site
+
+
+    // string path constants
     return(
         <div className="navbar">
           <div>
             <ul>
               <li>
-                <Link to="/user">
+                <Link to="/user"> 
                   User Home
                 </Link>
               </li>

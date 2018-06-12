@@ -19,6 +19,7 @@ This graph displays the top five factions based on their winning percentage of e
 
 ## Post A Game!
 In order for a user to record a game, he or she will click on the Post A Game! button on the bottom of any view.  After selecting the number of players, the following screen will be displayed: 
+
 ![VSCode Toolbar](documentation/images/gameinfo_input.png)
 After recording the user's information, the user will click the next button and input the other players' information.
 

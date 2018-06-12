@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react'; // will want to speak to types of prop creation, pros cons of each
 import { connect } from 'react-redux';
 import Button from 'material-ui/Button';
 import { Link } from 'react-router-dom';
@@ -78,7 +78,7 @@ const mapStateToProps = state => ({
     );
   }
 
-  class EditGameInfo extends Component {
+  class EditGameInfo extends PureComponent { // PureComponent
 
     state = {
       multi: null,

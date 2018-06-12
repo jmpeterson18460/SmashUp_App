@@ -21,6 +21,7 @@ if (process.env.NODE_ENV === 'development') {
   middlewares.push(logger);
 }
 
+// speak to what this does, how you could write your own middleware
 const store = createStore(
   reducer,
   preloadedState,

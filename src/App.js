@@ -29,7 +29,7 @@ const App = () => (
           component={LoginPage}
         />
         <Route
-          path="/register"
+          path="/register" // constant file
           component={RegisterPage}
         />
         <Route

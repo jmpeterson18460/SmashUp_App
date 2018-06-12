@@ -1,15 +1,19 @@
+// use propTypes
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { triggerLogin, formError, clearError } from '../../redux/actions/loginActions';
 
-
+// mindful that this runs whenever dispatch fires
+// Consider using helper functions that point to the value in state
+// Consider using reselect
 const mapStateToProps = state => ({
   user: state.user,
   login: state.login,
 });
 
-class LoginPage extends Component {
+export class LoginPage extends Component { // lets you test LoginPage in isolation, use mapDispatch...
   constructor(props) {
     super(props);
 
@@ -102,3 +106,4 @@ class LoginPage extends Component {
 }
 
 export default connect(mapStateToProps)(LoginPage);
+// consider mapDispatchToProps

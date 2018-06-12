@@ -1,3 +1,4 @@
+// install prettier
 import { call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios'
 
@@ -19,7 +20,7 @@ function* fetchFaction(action) {
     //will display in the console log
     } catch (error) {
         console.log('Error in getting factions: ', error);
-        
+        // consider handling this instead of logging (or in addition to). maybe store in a reducer and show
     }
 }
 
@@ -30,7 +31,6 @@ function* fetchMyGames(action){
         //back all of the games the user has submitted and stores them in myGames.data
         const myGames = yield call(axios.get, '/api/smashup/mygames')
         
-
         //sets state of myGames reducer with all of the user's submitted games 
         //via action 'SET_MY_GAMES' and payload myGames.data
         yield put({
@@ -178,7 +178,7 @@ function* delGameId(action){
 
 
 function* factionSaga() {
-    yield takeLatest('FETCH_FACTION', fetchFaction)
+    yield takeLatest('FETCH_FACTION', fetchFaction) // you'll be asked about takeLatest
     yield takeLatest('FETCH_MY_GAMES', fetchMyGames)
     yield takeLatest('FETCH_GAME', fetchGame)
     yield takeLatest('FETCH_GAME_ID', fetchGameId)

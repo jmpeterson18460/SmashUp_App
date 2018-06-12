@@ -35,8 +35,9 @@ const gameId = (state = [], action) => {
     return state
 }
 
+// use initialState
 const singleGame = (state = [{game_id: 0, player_name: '', points: 0, bases: '', comments: ''}], action) => {
-    if(action.type === 'SET_MY_GAME'){
+    if(action.type === 'SET_MY_GAME'){ // store action types as constants
         return action.payload
     }
     return state
@@ -48,4 +49,4 @@ export default combineReducers({
     myGames,
     gameId,
     singleGame
-})
+})// might be asked why these are nested

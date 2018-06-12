@@ -71,7 +71,7 @@ router.get('/mygames', (req, res) => {
         //their user id
         const queryText = `SELECT * FROM "user_game" WHERE "user_id" = $1;`
 
-        //sends query text to database; takes the result from the database
+        //sends queryText to database; takes the result from the database
         //and sends it back to the fetchMyGames generator function from factionSaga that 
         //requested it
         pool.query(queryText, [req.user.id]).then((result) => {
@@ -94,13 +94,25 @@ router.get('/mygames', (req, res) => {
 //gets a single game from the database
 router.get('/singlegame', (req, res) => {
     if(req.isAuthenticated){
+
+        //queryText returns the game with the given user_id and game_id
         const queryText = `SELECT * FROM "user_game" WHERE ("user_id" = $1 AND "game_id" = $2);`
+
+        //sends queryText to the database and returns the game with the given
+        //user_id and game_id and sends those back to the fetchGameId generator function
+        //from factionSaga that requested it
         pool.query(queryText, [req.user.id, req.query.id]).then((result) => {
             res.send(result.rows)
         }).catch((error) => {
+
+            //if there was an error in getting the single game from the database,
+            //the error will be displayed in the console log
             console.log('Error in getting game: ', error);
         })
     }else{
+
+        //if req.isAuthenticated() is false, the forbidden error will appear
+        //on the webpage
         res.sendStatus(403)
     }
 })

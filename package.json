@@ -2,7 +2,7 @@
   "name": "prime-solo-project",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:5001",
   "dependencies": {
     "@material-ui/core": "^1.0.0-rc.0",
     "@material-ui/icons": "^1.0.0-beta.43",
@@ -41,7 +41,8 @@
     "server": "nodemon --watch server server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "node_modules/.bin/eslint --fix src**"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

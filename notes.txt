@@ -1,0 +1,18 @@
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+know of each method
+-know what they return
+-if they mutate their args
+.reducer
+.map
+.forEach
+.filter
+.find
+
+
+know why should use key in react JSX .map
+
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+https://lodash.com/

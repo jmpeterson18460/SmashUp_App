@@ -1,9 +1,11 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
+/* Look into Styled-Components */
 
+/* store colors as constants */
 form {
-    background-color: #969292;
+    background-color: #969292; 
     width: 30%;
     height: 250px;
     margin: 20px auto;
