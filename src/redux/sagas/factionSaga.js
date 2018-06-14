@@ -89,6 +89,27 @@ function* fetchGameId(action) {
     }
 }
 
+function* fetchFactionRank(action) {
+    try{
+
+        //factionRank contains the top five factions
+        const factionRank = yield call(axios.get, '/api/smashup/factionrank')
+
+        //sets state of gameId reducer with all of the game ids via 'SET_GAME_ID'
+        //and payload gameId.data
+        // yield put({
+        //     type: 'SET_GAME_ID',
+        //     payload: gameId.data
+        // })
+
+    //if there is an error in sending get request to router, the error
+    //will display in the console log
+    }catch(error){
+        console.log('Error in getting game id: ', error);
+        
+    }
+}
+
 function* postGameInfo(action) {
 
     //sends game info to router '/api/smashup/gameinfo' for a brand new game
@@ -182,6 +203,7 @@ function* factionSaga() {
     yield takeLatest('FETCH_MY_GAMES', fetchMyGames)
     yield takeLatest('FETCH_GAME', fetchGame)
     yield takeLatest('FETCH_GAME_ID', fetchGameId)
+    yield takeLatest('FETCH_FACTION_RANK', fetchFactionRank)
     yield takeLatest('POST_GAME_INFO', postGameInfo)
     yield takeLatest('POST_GAME_INFO_W_GAME_ID', postGameInfoWGameId)
     yield takeLatest('EDIT_GAME', editGame)

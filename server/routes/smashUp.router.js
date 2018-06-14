@@ -117,6 +117,53 @@ router.get('/singlegame', (req, res) => {
     }
 })
 
+router.get('/factionrank', (req, res) => {
+
+    //see router.get('/faction') for explanation of req.isAuthenticated()
+    if(req.isAuthenticated()){
+
+        (async () => {
+            //client does not allow the program to proceed until it is connected to the database
+            const client = await pool.connect();
+
+            try{
+                await client.query('BEGIN');
+
+                //selects all factions that have placed 1st
+                let queryText = `SELECT "faction1", "faction2" FROM "user_game" WHERE "rank" = '1st';`;
+                const firstFactions = await client.query(queryText);
+
+                //the id of the game that was created in gameResult
+                const firstFactionsArray = firstFactions.rows
+                console.log('FACTIONS: ', firstFactionsArray);
+
+            } catch (e) {
+
+                //checks for errors at any point within the try block; if errors are found,
+                //all the data is cleared to prevent data corruption
+                console.log('ROLLBACK', e);
+                await client.query('ROLLBACK');
+                throw e;
+            } finally {
+
+                //allows res.sendStatus(201) to be sent
+                client.release();
+            }
+
+            //if an error occurs in posting the game info to the database, the error will
+            //appear in the console log
+        })().catch((error) => {
+            console.log('CATCH', error);
+            res.sendStatus(500);
+        })
+        
+    } else{
+        //if req.isAuthenticated() is false, the forbidden error will appear
+        //on the webpage
+        res.sendStatus(403);
+    }
+});
+
 router.post('/gameinfo', (req, res) => {
 
     //see router.get('/faction') for explanation of req.isAuthenticated()

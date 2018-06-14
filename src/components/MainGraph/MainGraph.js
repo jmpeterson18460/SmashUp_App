@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Bar} from 'react-chartjs-2';
+import { connect } from 'react-redux';
 
 const data = {
     labels: ['Pirates', 'Mythic Horses', 'Dragons', 'Wizards', 'Aliens'],
@@ -15,8 +16,19 @@ const data = {
       }
     ]
   };
+
+  const mapStateToProps = state => ({
+    user: state.user,
+    state
+  });
   
   class MainBarGraph extends Component{
+
+    componentDidMount(){
+      this.props.dispatch({
+        type:'FETCH_FACTION_RANK'
+      })
+    }
     
   
     render() {
@@ -35,4 +47,4 @@ const data = {
       );
     }
   };
-  export default MainBarGraph
+  export default connect(mapStateToProps)(MainBarGraph);
