@@ -117,6 +117,7 @@ router.get('/singlegame', (req, res) => {
     }
 })
 
+//returns the top five factions according to win percentage
 router.get('/factionrank', (req, res) => {
 
     //see router.get('/faction') for explanation of req.isAuthenticated()
@@ -133,7 +134,8 @@ router.get('/factionrank', (req, res) => {
                 let queryText = `SELECT "faction1", "faction2" FROM "user_game" WHERE "rank" = '1st';`;
                 const firstFactions = await client.query(queryText);
 
-                //the id of the game that was created in gameResult
+                //firstFactionsArray is an array that contains each instance
+                //that a faction placed 1st
                 const firstFactionsArray = firstFactions.rows
                 console.log('FACTIONS: ', firstFactionsArray);
 
