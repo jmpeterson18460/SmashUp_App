@@ -117,7 +117,7 @@ router.get('/singlegame', (req, res) => {
     }
 })
 
-//returns the top five factions according to win percentage
+//gets the top five factions according to win percentage
 router.get('/factionrank', (req, res) => {
 
     //see router.get('/faction') for explanation of req.isAuthenticated()
