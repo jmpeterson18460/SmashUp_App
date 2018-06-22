@@ -24,7 +24,7 @@ In order for a user to record a game, he or she will click on the Post A Game! b
 After recording the user's information, the user will click the next button and input the other players' information.
 
 ## MyGameLog
-Once a game has been submitted, the user will be taken to the MyGameLog page.  Here the user can see all of the games he or she has inputted.  If there is a mistake in one of the entries, the user can edit a game by click on the pencil icon.  If the user wants to delete a game, he or she can click on the garabage icon
+Once a game has been submitted, the user will be taken to the MyGameLog page.  Here the user can see all of the games he or she has inputted.  If there is a mistake in one of the entries, the user can edit a game by clicking on the pencil icon.  If the user wants to delete a game, he or she can click on the garabage icon.
 
 ![VSCode Toolbar](documentation/images/mygamelog.png)
 
