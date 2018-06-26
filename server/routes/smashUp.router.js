@@ -138,6 +138,7 @@ router.get('/factionrank', (req, res) => {
                 //that a faction placed 1st
                 const firstFactionsArray = firstFactions.rows
                 console.log('FACTIONS: ', firstFactionsArray);
+                res.send(firstFactionsArray);
 
             } catch (e) {
 

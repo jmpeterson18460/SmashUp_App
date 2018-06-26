@@ -32,6 +32,10 @@ const data = {
     
   
     render() {
+      if(this.props.state.faction.factionRank != []){
+        console.log('FACTIONS: ', this.props.state.faction.factionRank);
+      }
+      
       return (
         <div>
           <h2>Current Top Factions</h2>

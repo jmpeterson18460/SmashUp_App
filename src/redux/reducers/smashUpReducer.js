@@ -43,10 +43,18 @@ const singleGame = (state = [{game_id: 0, player_name: '', points: 0, bases: '',
     return state
 }
 
+const factionRank = (state = [], action) => {
+    if(action.type === 'SET_FACTION_RANK'){
+        return action.payload
+    }
+    return state
+}
+
 export default combineReducers({
     factionName,
     numOfPlayers,
     myGames,
     gameId,
-    singleGame
+    singleGame,
+    factionRank
 })// might be asked why these are nested

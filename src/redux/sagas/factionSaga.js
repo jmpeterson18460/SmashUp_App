@@ -97,10 +97,10 @@ function* fetchFactionRank(action) {
 
         //sets state of gameId reducer with all of the game ids via 'SET_GAME_ID'
         //and payload gameId.data
-        // yield put({
-        //     type: 'SET_GAME_ID',
-        //     payload: gameId.data
-        // })
+        yield put({
+            type: 'SET_FACTION_RANK',
+            payload: factionRank.data
+        })
 
     //if there is an error in sending get request to router, the error
     //will display in the console log
