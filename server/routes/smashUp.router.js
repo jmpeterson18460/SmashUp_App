@@ -130,15 +130,29 @@ router.get('/factionrank', (req, res) => {
             try{
                 await client.query('BEGIN');
 
-                //selects all factions that have placed 1st
-                let queryText = `SELECT "faction1", "faction2" FROM "user_game" WHERE "rank" = '1st';`;
-                const firstFactions = await client.query(queryText);
+                //selects all factions
+                const queryText = `SELECT * FROM "faction" ORDER BY "name" ASC;`;
+                const factions = await client.query(queryText);
 
-                //firstFactionsArray is an array that contains each instance
-                //that a faction placed 1st
-                const firstFactionsArray = firstFactions.rows
-                console.log('FACTIONS: ', firstFactionsArray);
-                res.send(firstFactionsArray);
+                //FactionsArray is an array whose elements are objects where
+                //each object has properties of faction id and faction name
+                const FactionsArray = factions.rows
+                console.log('FACTIONS: ', FactionsArray);
+
+                const rankArray = FactionsArray.map( async (faction) => {
+                    
+                    let factionQueryText = `SELECT count(*) FROM "user_game" WHERE 
+                    (("faction1" = $1 OR "faction2" = $2) AND ("rank" = '1st'));`;
+                    let factionRank = await client.query(factionQueryText, [faction.name, faction.name]);
+                    let numberOfFirsts = factionRank.rows;
+                    console.log('NUMBER OF 1ST: ', numberOfFirsts);
+                    
+                    return({name: faction.name, wins: numberOfFirsts.count})
+                })
+
+                console.log('FIRST PLACE COUNT: ', rankArray);
+                
+                res.send(FactionsArray);
 
             } catch (e) {
 
