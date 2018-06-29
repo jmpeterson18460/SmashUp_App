@@ -141,14 +141,21 @@ router.get('/factionrank', (req, res) => {
 
                 let winArray = [];
 
+                //gets number of wins for each faction
                 for(faction of FactionsArray){
-                    let factionQueryText = `SELECT count(*) FROM "user_game" WHERE 
+                    let numberOfWinsQueryText = `SELECT count(*) FROM "user_game" WHERE 
                     (("faction1" = $1 OR "faction2" = $2) AND ("rank" = '1st'));`;
-                    let factionRank = await client.query(factionQueryText, [faction.name, faction.name]);
+                    let factionRank = await client.query(numberOfWinsQueryText, [faction.name, faction.name]);
                     let numberOfFirsts = factionRank.rows[0];
-                    console.log('NUMBER OF 1ST: ', numberOfFirsts);
-                    winArray.push({name: faction.name, wins: numberOfFirsts.count})
+                    
+                    let totalGamesPlayedQueryText = `SELECT count(*) FROM "user_game" WHERE 
+                    ("faction1" = $1 OR "faction2" = $2);`;
+                    let numberOfGames = await client.query(totalGamesPlayedQueryText, [faction.name, faction.name]);
+                    let totalGamesPlayed = numberOfGames.rows[0];
+                    winArray.push({name: faction.name, wins: ((numberOfFirsts.count/totalGamesPlayed.count)*100).toFixed(1)})
                 }
+                console.log('WIN PERCENTAGE: ', winArray);
+                
                 
                 res.send(winArray);
 
