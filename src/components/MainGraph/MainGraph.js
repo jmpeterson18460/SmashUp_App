@@ -33,7 +33,7 @@ const data = {
   
     render() {
       if(this.props.state.faction.factionRank != []){
-        console.log('FACTIONS: ', this.props.state.faction.factionRank);
+        console.log('FACTION WINS: ', this.props.state.faction.factionRank);
       }
       
       return (

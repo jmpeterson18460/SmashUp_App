@@ -139,20 +139,18 @@ router.get('/factionrank', (req, res) => {
                 const FactionsArray = factions.rows
                 console.log('FACTIONS: ', FactionsArray);
 
-                const rankArray = FactionsArray.map( async (faction) => {
-                    
+                let winArray = [];
+
+                for(faction of FactionsArray){
                     let factionQueryText = `SELECT count(*) FROM "user_game" WHERE 
                     (("faction1" = $1 OR "faction2" = $2) AND ("rank" = '1st'));`;
                     let factionRank = await client.query(factionQueryText, [faction.name, faction.name]);
-                    let numberOfFirsts = factionRank.rows;
+                    let numberOfFirsts = factionRank.rows[0];
                     console.log('NUMBER OF 1ST: ', numberOfFirsts);
-                    
-                    return({name: faction.name, wins: numberOfFirsts.count})
-                })
-
-                console.log('FIRST PLACE COUNT: ', rankArray);
+                    winArray.push({name: faction.name, wins: numberOfFirsts.count})
+                }
                 
-                res.send(FactionsArray);
+                res.send(winArray);
 
             } catch (e) {
 
