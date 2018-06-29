@@ -152,7 +152,15 @@ router.get('/factionrank', (req, res) => {
                     ("faction1" = $1 OR "faction2" = $2);`;
                     let numberOfGames = await client.query(totalGamesPlayedQueryText, [faction.name, faction.name]);
                     let totalGamesPlayed = numberOfGames.rows[0];
-                    winArray.push({name: faction.name, wins: ((numberOfFirsts.count/totalGamesPlayed.count)*100).toFixed(1)})
+
+                    let winPercentage = Number(((numberOfFirsts.count/totalGamesPlayed.count)*100).toFixed(1))
+                    if(isNaN(winPercentage)){
+                        winPercentage = 0
+                    }
+                    let winPercentageQueryText = `UPDATE "faction" SET "win_percentage" = $1 WHERE
+                    "name" = $2;`;
+                    await client.query(winPercentageQueryText, [winPercentage, faction.name])
+                    winArray.push({name: faction.name, wins: winPercentage})
                 }
                 console.log('WIN PERCENTAGE: ', winArray);
                 
