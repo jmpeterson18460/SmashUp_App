@@ -157,13 +157,21 @@ router.get('/factionrank', (req, res) => {
                     if(isNaN(winPercentage)){
                         winPercentage = 0
                     }
-                    let winPercentageQueryText = `UPDATE "faction" SET "win_percentage" = $1 WHERE
-                    "name" = $2;`;
-                    await client.query(winPercentageQueryText, [winPercentage, faction.name])
+
+                    // let winPercentageQueryText = `UPDATE "faction" SET "win_percentage" = $1 WHERE "name" = $2;`;
+                    // await client.query(winPercentageQueryText, [winPercentage, faction.name])
+
                     winArray.push({name: faction.name, wins: winPercentage})
                 }
-                console.log('WIN PERCENTAGE: ', winArray);
-                
+                // console.log('WIN PERCENTAGE: ', winArray);
+
+                // const queryText1 = `SELECT * FROM "faction" ORDER BY "name" ASC;`;
+                // const factions1 = await client.query(queryText1);
+
+                //FactionsArray is an array whose elements are objects where
+                //each object has properties of faction id and faction name
+                // const FactionsArray1 = factions1.rows
+                // console.log('FACTIONS1: ', FactionsArray1);
                 
                 res.send(winArray);
 
@@ -193,6 +201,55 @@ router.get('/factionrank', (req, res) => {
         res.sendStatus(403);
     }
 });
+
+router.put('/updaterank', (req, res) => {
+
+    if(req.isAuthenticated()){
+    console.log('REQBODY: ', req.body);
+
+    (async () => {
+        //client does not allow the program to proceed until it is connected to the database
+        const client = await pool.connect();
+
+        try{
+            await client.query('BEGIN');
+
+            //gets number of wins for each faction
+            for(faction of req.body){
+
+                let winPercentageQueryText = `UPDATE "faction" SET "win_percentage" = $1 WHERE "name" = $2;`;
+                console.log('FACTION INFO: ', faction.name, faction.wins);
+                
+                await client.query(winPercentageQueryText, [faction.wins, faction.name])
+            }
+            
+            res.sendStatus(201);
+
+        } catch (e) {
+
+            //checks for errors at any point within the try block; if errors are found,
+            //all the data is cleared to prevent data corruption
+            console.log('ROLLBACK', e);
+            await client.query('ROLLBACK');
+            throw e;
+        } finally {
+
+            //allows res.sendStatus(201) to be sent
+            client.release();
+        }
+
+        //if an error occurs in posting the game info to the database, the error will
+        //appear in the console log
+    })().catch((error) => {
+        console.log('CATCH', error);
+        res.sendStatus(500);
+    })
+    
+    
+} else{
+    res.sendStatus(403);
+}
+})
 
 router.post('/gameinfo', (req, res) => {
 

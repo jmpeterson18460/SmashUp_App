@@ -98,7 +98,7 @@ function* fetchFactionRank(action) {
         //sets state of gameId reducer with all of the game ids via 'SET_GAME_ID'
         //and payload gameId.data
         yield put({
-            type: 'SET_FACTION_RANK',
+            type: 'UPDATE_FACTION_RANK',
             payload: factionRank.data
         })
 
@@ -107,6 +107,14 @@ function* fetchFactionRank(action) {
     }catch(error){
         console.log('Error in getting game id: ', error);
         
+    }
+}
+
+function* updateFactionRank(action){
+    try{
+        yield call(axios.put, '/api/smashup/updaterank', action.payload)
+    } catch (error){
+        console.log('Error in updating rank: ', error);
     }
 }
 
@@ -206,6 +214,7 @@ function* factionSaga() {
     yield takeLatest('FETCH_FACTION_RANK', fetchFactionRank)
     yield takeLatest('POST_GAME_INFO', postGameInfo)
     yield takeLatest('POST_GAME_INFO_W_GAME_ID', postGameInfoWGameId)
+    yield takeLatest('UPDATE_FACTION_RANK', updateFactionRank)
     yield takeLatest('EDIT_GAME', editGame)
     yield takeLatest('DEL_GAME', delGame)
     yield takeLatest('DEL_GAME_ID', delGameId)
