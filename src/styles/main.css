@@ -14,8 +14,7 @@ form {
 }
 
 table {
-    margin-left: auto;
-    margin-right: auto;
+    
     margin-top: 20px;
     border-collapse: collapse;
     width: 30%;
@@ -88,6 +87,13 @@ input[type="submit"] {
   background-color: #00acb0;
   width: 100%;
   border-radius: 0px;
+}
+
+.organizeTable{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 170px;
+    
 }
 
 .tablebutton{

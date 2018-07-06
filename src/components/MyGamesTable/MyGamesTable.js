@@ -104,7 +104,7 @@ const mapStateToProps = state => ({
         })
 
         return (
-            <div>
+            <div className = 'organizeTable'>
                 {finalTable}
             </div>
             
