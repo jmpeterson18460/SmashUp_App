@@ -134,32 +134,44 @@ router.get('/factionrank', (req, res) => {
                 const queryText = `SELECT * FROM "faction" ORDER BY "name" ASC;`;
                 const factions = await client.query(queryText);
 
-                //FactionsArray is an array whose elements are objects where
+                //factionsArray is an array whose elements are objects where
                 //each object has properties of faction id and faction name
-                const FactionsArray = factions.rows
-                console.log('FACTIONS: ', FactionsArray);
+                const factionsArray = factions.rows
 
+                //winArray will hold each faction and its respective win percentage
                 let winArray = [];
 
-                //gets number of wins for each faction
-                for(faction of FactionsArray){
+                //loops through each faction in factionsArray
+                for(faction of factionsArray){
+
+                    //numberOfWinsQueryText gets the number of times a faction has placed 1st
                     let numberOfWinsQueryText = `SELECT count(*) FROM "user_game" WHERE 
                     (("faction1" = $1 OR "faction2" = $2) AND ("rank" = '1st'));`;
+
+                    //factionRank executes numberOfWinsQueryText
                     let factionRank = await client.query(numberOfWinsQueryText, [faction.name, faction.name]);
+
+                    //numberOfFirsts contains the number of times a faction has placed 1st
                     let numberOfFirsts = factionRank.rows[0];
                     
+                    //totalGamesPlayedQueryText gets the number of games a faction has played in
                     let totalGamesPlayedQueryText = `SELECT count(*) FROM "user_game" WHERE 
                     ("faction1" = $1 OR "faction2" = $2);`;
+
+                    //numberOfGames executes totalGamesPlayedQueryText
                     let numberOfGames = await client.query(totalGamesPlayedQueryText, [faction.name, faction.name]);
+
+                    //totalGamesPlayed contains the total number of games a faction has played in
                     let totalGamesPlayed = numberOfGames.rows[0];
 
+                    //winPercentage calculates the win percentage of each faction by taking the number of
+                    //times a faction placed 1st(numberOfFirsts.count) and dividing that number by the total
+                    //number of games a faction has played in(totalGamesPlayed.count); this is then multiplied
+                    //by 100 to convert it to a percentage and is rounded to the nearest tenth
                     let winPercentage = Number(((numberOfFirsts.count/totalGamesPlayed.count)*100).toFixed(1))
                     if(isNaN(winPercentage)){
                         winPercentage = 0
                     }
-
-                    // let winPercentageQueryText = `UPDATE "faction" SET "win_percentage" = $1 WHERE "name" = $2;`;
-                    // await client.query(winPercentageQueryText, [winPercentage, faction.name])
 
                     winArray.push({id: faction.id, name: faction.name, wins: winPercentage})
                 }
