@@ -43,6 +43,7 @@ const singleGame = (state = [{game_id: 0, player_name: '', points: 0, bases: '',
     return state
 }
 
+//contains each factions' winning percentage
 const factionRank = (state = [], action) => {
     if(action.type === 'SET_FACTION_RANK'){
         return action.payload

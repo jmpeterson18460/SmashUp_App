@@ -77,6 +77,7 @@ const mapStateToProps = state => ({
         })
 
         let gameTable = [];
+        let gameDateTable = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
 
         //the result of this for loop will be the array gameTable whose elements are arrays;
         //inside those arrays are table rows
@@ -108,7 +109,7 @@ const mapStateToProps = state => ({
             return(<div>
                 <ExpansionPanel>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>TABLE</Typography>
+                <Typography>TABLE{gameDateTable[gameTable.indexOf(table)]}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <Typography>
@@ -118,6 +119,7 @@ const mapStateToProps = state => ({
                     </ExpansionPanelDetails>
                     </ExpansionPanel>
                 </div>)
+                
         })
 
         return (
