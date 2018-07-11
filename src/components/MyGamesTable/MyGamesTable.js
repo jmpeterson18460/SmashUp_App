@@ -6,6 +6,12 @@ import { IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import Dialogbox from '../DeleteDialogBox/DeleteDialogBox'
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 const mapStateToProps = state => ({
     user: state.user,
     state
@@ -99,8 +105,19 @@ const mapStateToProps = state => ({
         let finalTable = gameTable.map((table) => {
 
             //gameTable is an array whose elements are arrays; inside those arrays are table rows
-            return(<div><table><thead><tr><th>Players</th><th>Factions</th><th>Points</th><th>Rank</th>
-                    <th>Edit/Delete</th></tr></thead><tbody>{table}</tbody></table></div>)
+            return(<div>
+                <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>TABLE</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                    <Typography>
+                    <table><thead><tr><th>Players</th><th>Factions</th><th>Points</th><th>Rank</th>
+                    <th>Edit/Delete</th></tr></thead><tbody>{table}</tbody></table>
+                    </Typography>
+                    </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                </div>)
         })
 
         return (
