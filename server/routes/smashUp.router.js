@@ -148,7 +148,7 @@ router.get('/factionrank', (req, res) => {
                     let numberOfWinsQueryText = `SELECT count(*) FROM "user_game" WHERE 
                     (("faction1" = $1 OR "faction2" = $2) AND ("rank" = '1st'));`;
 
-                    //factionRank executes numberOfWinsQueryText
+                    //factionRank executes numberOfWinsQueryText and contains the data from the database
                     let factionRank = await client.query(numberOfWinsQueryText, [faction.name, faction.name]);
 
                     //numberOfFirsts contains the number of times a faction has placed 1st
