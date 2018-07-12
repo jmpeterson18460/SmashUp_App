@@ -106,10 +106,11 @@ const mapStateToProps = state => ({
         let finalTable = gameTable.map((table) => {
 
             //gameTable is an array whose elements are arrays; inside those arrays are table rows
+            //each of these tables has been put inside an expansion panel
             return(<div>
                 <ExpansionPanel>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>TABLE{gameDateTable[gameTable.indexOf(table)]}</Typography>
+                <Typography>GAME{gameDateTable[gameTable.indexOf(table)]}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <Typography>
