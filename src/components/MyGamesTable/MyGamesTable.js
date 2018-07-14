@@ -12,6 +12,8 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import moment from 'moment';
+
 const mapStateToProps = state => ({
     user: state.user,
     state
@@ -77,11 +79,15 @@ const mapStateToProps = state => ({
         })
 
         let gameTable = [];
-        let gameDateTable = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+        let gameDateTable = [];
 
         //the result of this for loop will be the array gameTable whose elements are arrays;
         //inside those arrays are table rows
         for(let games of gameArray){
+            if(games[0] && games[0].date){
+                gameDateTable.push(moment(games[0].date).format('MMMM Do, YYYY'))
+            }
+            
             
 
             //myGame is an array of table rows
@@ -110,7 +116,7 @@ const mapStateToProps = state => ({
             return(<div>
                 <ExpansionPanel>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>GAME{gameDateTable[gameTable.indexOf(table)]}</Typography>
+                <Typography>{gameDateTable[gameTable.indexOf(table)]}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <Typography>
