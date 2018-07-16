@@ -84,11 +84,12 @@ const mapStateToProps = state => ({
         //the result of this for loop will be the array gameTable whose elements are arrays;
         //inside those arrays are table rows
         for(let games of gameArray){
+
+            //this if statement retrieves the dates that each game was logged in order
+            //to be displayed on the MyGameLog page
             if(games[0] && games[0].date){
                 gameDateTable.push(moment(games[0].date).format('MMMM Do, YYYY'))
             }
-            
-            
 
             //myGame is an array of table rows
             let myGame = games.map((game) => {
